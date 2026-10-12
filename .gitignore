@@ -58,3 +58,26 @@ next-env.d.ts
 /work/
 
 *.tsbuildinfo
+
+# Current portfolio build and private runtime files
+node_modules/
+.env
+.env.*
+!.env.example
+client/dist/
+server/dist/
+uploads/
+data/
+test-results/
+playwright-report/
+*.zip
+*.log
+
+.npm-cache/
+delivery/
+
+!server/data/
+
+!server/data/*.json
+
+.publish-portfolio/
