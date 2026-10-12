@@ -1,0 +1,14 @@
+import fs from 'node:fs';import path from 'node:path';
+const target='delivery/portfolio-github';fs.mkdirSync(target+'/src',{recursive:true});fs.mkdirSync(target+'/public/previews',{recursive:true});
+for(const name of ['world.tsx','world.css','PublicProjects.tsx','world-projects.json'])fs.copyFileSync('client/src/'+name,target+'/src/'+(name==='world.tsx'?'main.tsx':name));
+fs.writeFileSync(target+'/index.html',fs.readFileSync('client/index.html','utf8').replace('/src/world.tsx','/src/main.tsx'));
+fs.copyFileSync('client/public/world-agency-logo.svg',target+'/public/world-agency-logo.svg');
+const projects=JSON.parse(fs.readFileSync('client/src/world-projects.json','utf8'));for(const p of projects)if(p.image)fs.copyFileSync('client/public'+p.image,target+'/public'+p.image);
+const versions=names=>Object.fromEntries(names.map(n=>[n,JSON.parse(fs.readFileSync('node_modules/'+n+'/package.json','utf8')).version]));
+fs.writeFileSync(target+'/package.json',JSON.stringify({name:'world-agentic-portfolio',version:'1.0.0',private:true,type:'module',scripts:{dev:'vite --host 127.0.0.1',build:'tsc --noEmit && vite build',preview:'vite preview --host 127.0.0.1'},dependencies:versions(['react','react-dom','lucide-react']),devDependencies:versions(['vite','typescript','@vitejs/plugin-react','@tailwindcss/vite','tailwindcss','@types/react','@types/react-dom']),engines:{node:'>=22.12'}},null,2)+'\n');
+fs.writeFileSync(target+'/vite.config.ts',"import {defineConfig} from 'vite';\nimport react from '@vitejs/plugin-react';\nimport tailwindcss from '@tailwindcss/vite';\nexport default defineConfig({plugins:[react(),tailwindcss()],build:{outDir:'dist'}});\n");
+fs.writeFileSync(target+'/tsconfig.json',JSON.stringify({compilerOptions:{target:'ES2022',lib:['ES2022','DOM','DOM.Iterable'],module:'ESNext',moduleResolution:'Bundler',jsx:'react-jsx',strict:true,noEmit:true,esModuleInterop:true,skipLibCheck:true,resolveJsonModule:true,types:['vite/client']},include:['src']},null,2)+'\n');
+fs.writeFileSync(target+'/.gitignore','node_modules/\ndist/\n.env\n.env.*\n!.env.example\n');
+fs.writeFileSync(target+'/vercel.json',JSON.stringify({buildCommand:'npm run build',outputDirectory:'dist',framework:'vite'},null,2)+'\n');
+fs.writeFileSync(target+'/netlify.toml','[build]\n  command = "npm run build"\n  publish = "dist"\n');
+console.log('Prepared standalone Portfolio source:',target);
