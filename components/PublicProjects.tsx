@@ -1,8 +1,9 @@
+'use client';
 import {useEffect,useRef,useState} from 'react';
 import {ArrowUpRight,ArrowRight,Code2,Globe,Search,X,ExternalLink,Maximize2,Monitor,Smartphone,Play} from 'lucide-react';
-import records from './world-projects.json';
-type Project=typeof records[number];
-export default function PublicProjects(){
+import type {WorldProject} from '../lib/project-types';
+type Project=WorldProject;
+export default function PublicProjects({records}:{records:WorldProject[]}){
 const [category,setCategory]=useState('All projects');const [query,setQuery]=useState('');const [liveOnly,setLiveOnly]=useState(false);const [limit,setLimit]=useState(12);const [selected,setSelected]=useState<{project:Project;view:'demo'|'details'}|null>(null);const [mobile,setMobile]=useState(false);const dialog=useRef<HTMLDialogElement>(null);const returnFocus=useRef<HTMLElement|null>(null);
 const filtered=records.filter(p=>(category==='All projects'||p.category===category)&&(!liveOnly||p.status==='live')&&`${p.name} ${p.description} ${p.technologies.join(' ')}`.toLowerCase().includes(query.toLowerCase()));
 useEffect(()=>{setLimit(12)},[category,query,liveOnly]);
