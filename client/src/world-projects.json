@@ -1,0 +1,220 @@
+[
+  {
+    "name": "app-name-is-mardara",
+    "category": "Websites",
+    "repository": "",
+    "url": "",
+    "description": "An AI-built project from my public collection. Explore the source and available live experience.",
+    "image": "",
+    "imageAlt": "",
+    "archived": false,
+    "updatedAt": "2026-10-10T11:51:54Z",
+    "status": "live",
+    "embeddable": true,
+    "checkedAt": "2026-10-12T06:22:44.739Z",
+    "technologies": [
+      "JavaScript",
+      "HTML",
+      "Dockerfile"
+    ]
+  },
+  {
+    "name": "TARGET-RUSH",
+    "category": "Games",
+    "repository": "",
+    "url": "",
+    "description": "An AI-built project from my public collection. Explore the source and available live experience.",
+    "image": "/previews/target-rush-desktop-640.webp",
+    "imageAlt": "TARGET-RUSH genuine desktop public homepage screenshot",
+    "archived": false,
+    "updatedAt": "2026-10-10T11:44:41Z",
+    "status": "live",
+    "embeddable": true,
+    "checkedAt": "2026-10-12T06:22:43.454Z",
+    "technologies": [
+      "HTML"
+    ]
+  },
+  {
+    "name": "Mardara_Travel_Agent",
+    "category": "AI Tools",
+    "repository": "",
+    "url": "",
+    "description": "An AI-built project from my public collection. Explore the source and available live experience.",
+    "image": "/previews/mardara-travel-agent-desktop-640.webp",
+    "imageAlt": "Mardara_Travel_Agent genuine desktop public homepage screenshot",
+    "archived": false,
+    "updatedAt": "2026-10-10T11:43:12Z",
+    "status": "live",
+    "embeddable": true,
+    "checkedAt": "2026-10-12T06:22:43.135Z",
+    "technologies": [
+      "HTML"
+    ]
+  },
+  {
+    "name": "SNIPER-SHADOW",
+    "category": "Games",
+    "repository": "",
+    "url": "",
+    "description": "An AI-built project from my public collection. Explore the source and available live experience.",
+    "image": "/previews/sniper-shadow-desktop-640.webp",
+    "imageAlt": "SNIPER-SHADOW genuine desktop public homepage screenshot",
+    "archived": false,
+    "updatedAt": "2026-10-10T11:40:56Z",
+    "status": "live",
+    "embeddable": true,
+    "checkedAt": "2026-10-12T06:22:43.930Z",
+    "technologies": [
+      "HTML"
+    ]
+  },
+  {
+    "name": "-Nexagen-Solution-website",
+    "category": "Websites",
+    "repository": "",
+    "url": "",
+    "description": "An AI-built project from my public collection. Explore the source and available live experience.",
+    "image": "/previews/nexagen-solution-website-desktop-640.webp",
+    "imageAlt": "-Nexagen-Solution-website genuine desktop public homepage screenshot",
+    "archived": false,
+    "updatedAt": "2026-10-10T09:51:27Z",
+    "status": "live",
+    "embeddable": true,
+    "checkedAt": "2026-10-12T06:22:43.122Z",
+    "technologies": [
+      "JavaScript",
+      "CSS",
+      "HTML",
+      "Python",
+      "Node.js"
+    ]
+  },
+  {
+    "name": "ROYALVOWS",
+    "category": "Websites",
+    "repository": "",
+    "url": "",
+    "description": "An AI-built project from my public collection. Explore the source and available live experience.",
+    "image": "/previews/royalvows-desktop-640.webp",
+    "imageAlt": "ROYALVOWS genuine desktop public homepage screenshot",
+    "archived": false,
+    "updatedAt": "2026-10-10T08:04:23Z",
+    "status": "live",
+    "embeddable": true,
+    "checkedAt": "2026-10-12T06:22:43.687Z",
+    "technologies": [
+      "TypeScript",
+      "CSS",
+      "JavaScript",
+      "HTML",
+      "React",
+      "Express",
+      "Node.js"
+    ]
+  },
+  {
+    "name": "AERION-DRIVE",
+    "category": "Websites",
+    "repository": "",
+    "url": "",
+    "description": "An AI-built project from my public collection. Explore the source and available live experience.",
+    "image": "/previews/aerion-drive-desktop-640.webp",
+    "imageAlt": "AERION-DRIVE genuine desktop public homepage screenshot",
+    "archived": false,
+    "updatedAt": "2026-10-10T07:55:40Z",
+    "status": "live",
+    "embeddable": true,
+    "checkedAt": "2026-10-12T06:22:44.283Z",
+    "technologies": [
+      "TypeScript",
+      "JavaScript",
+      "CSS",
+      "HTML",
+      "React",
+      "Vite",
+      "Express",
+      "Tailwind",
+      "Node.js",
+      "GSAP"
+    ]
+  },
+  {
+    "name": "KINETIQ-STUDIO",
+    "category": "Websites",
+    "repository": "",
+    "url": "",
+    "description": "An AI-built project from my public collection. Explore the source and available live experience.",
+    "image": "/previews/kinetiq-studio-desktop-640.webp",
+    "imageAlt": "KINETIQ-STUDIO genuine desktop public homepage screenshot",
+    "archived": false,
+    "updatedAt": "2026-10-10T07:54:19Z",
+    "status": "live",
+    "embeddable": true,
+    "checkedAt": "2026-10-12T06:22:44.559Z",
+    "technologies": [
+      "TypeScript",
+      "CSS",
+      "JavaScript",
+      "HTML",
+      "React",
+      "Vite",
+      "Express",
+      "Tailwind",
+      "Node.js",
+      "GSAP"
+    ]
+  },
+  {
+    "name": "Roamora",
+    "category": "Websites",
+    "repository": "",
+    "url": "",
+    "description": "An AI-built project from my public collection. Explore the source and available live experience.",
+    "image": "",
+    "imageAlt": "",
+    "archived": false,
+    "updatedAt": "2026-10-06T10:35:12Z",
+    "status": "live",
+    "embeddable": true,
+    "checkedAt": "2026-10-12T06:22:42.647Z",
+    "technologies": [
+      "TypeScript",
+      "JavaScript"
+    ]
+  },
+  {
+    "name": "Mardara_Speed",
+    "category": "Web Apps",
+    "repository": "",
+    "url": "",
+    "description": "An AI-built project from my public collection. Explore the source and available live experience.",
+    "image": "/previews/mardara-speed-desktop-640.webp",
+    "imageAlt": "Mardara_Speed genuine desktop public homepage screenshot",
+    "archived": false,
+    "updatedAt": "2026-10-03T07:40:53Z",
+    "status": "live",
+    "embeddable": true,
+    "checkedAt": "2026-10-12T06:22:43.711Z",
+    "technologies": []
+  },
+  {
+    "name": "Mardara-gym-",
+    "category": "Websites",
+    "repository": "",
+    "url": "",
+    "description": "An AI-built project from my public collection. Explore the source and available live experience.",
+    "image": "/previews/mardara-gym-desktop-640.webp",
+    "imageAlt": "Mardara-gym- genuine desktop public homepage screenshot",
+    "archived": false,
+    "updatedAt": "2026-10-03T07:33:04Z",
+    "status": "live",
+    "embeddable": true,
+    "checkedAt": "2026-10-12T06:22:45.022Z",
+    "technologies": [
+      "HTML",
+      "JavaScript",
+      "Node.js"
+    ]
+  }
+]
