@@ -1,0 +1,8 @@
+import fs from 'node:fs';
+const file='client/src/world.css';let css=fs.readFileSync(file,'utf8');
+const colors={'#0b0d16':'#101416','#121520':'#171e21','#eef0f9':'#eff4f5','#9296a9':'#96a8b0','#b8a4ff':'#63b8ff','#191727':'#18272f','#7b9eff':'#70ddd1','#cbbcff':'#8acbff','#121020':'#0a2030','#7460df20':'#298acd24','#5b5982':'#527787','#242343':'#223b4b','#101022':'#0c1b24','#c6b5ff55':'#9adaff55','#8572ff12':'#49a8ff20','#d1caff':'#c4eaff','#c4b3ff':'#8dd3ff','#d1c5ff':'#a8deff','#6c79dd50':'#4da9d460','#a99bf01c':'#72bfd326','#121421d9':'#142127e8','#baabf2':'#72c7ff','#16142555':'#192e3555','#29223d':'#1c3440','#211c33':'#142c38','#e6dcff':'#d7efff','#3c285a24':'#14537824','#8771d932':'#469de232','#f7f7fb':'#f7f6f1','#191a2a':'#182e36','#686b7f':'#637780','#15172b18':'#172e361c','#7354c1':'#096ba6','#f1edf9':'#e7f1f4','#f1eaff':'#e5f1f8','#416dd2':'#1f968c','#f8f7fe':'#f4f8fa'};
+for(const [from,to] of Object.entries(colors))css=css.replaceAll(from,to);
+css+='\n/* World Agency: charcoal, electric blue, and soft ivory. */\n[data-theme=light] .source-cover{background:radial-gradient(ellipse at 90% 0%,#469de21c,transparent 70%),linear-gradient(135deg,#fff,#eaf2f4)}\n[data-theme=light] .about-section{background:linear-gradient(110deg,#e6f1f5,transparent)}\n[data-theme=light] .contact-section{background:radial-gradient(ellipse at 20% 100%,#dcecf5,transparent 60%)}\n[data-theme=light] .hero-art:before{background:#55b9f222}\n';
+fs.writeFileSync(file,css);
+for(const p of ['client/index.html','client/public/world-agency-logo.svg']){let t=fs.readFileSync(p,'utf8').replaceAll('#0b0d16','#101416').replaceAll('#b8a4ff','#63b8ff');fs.writeFileSync(p,t)}
+console.log('Applied charcoal / electric blue / ivory theme.');
