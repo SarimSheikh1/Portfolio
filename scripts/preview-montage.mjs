@@ -1,0 +1,5 @@
+import sharp from 'sharp';
+import {readFile,mkdir} from 'node:fs/promises';
+const {projects}=JSON.parse(await readFile('evidence/published-projects.json','utf8'));
+await mkdir('docs/qa',{recursive:true});
+for(const mode of ['desktop','mobile']){const width=mode==='desktop'?430:230;const height=mode==='desktop'?325:450;const cols=mode==='desktop'?3:5;const rows=Math.ceil(projects.length/cols);const items=[];for(let i=0;i<projects.length;i++){const p=projects[i];if(!p[mode])continue;const img=await sharp('client/public'+p[mode].url).resize({width,height:height-25,fit:'contain',background:'#fff'}).toBuffer();items.push({input:img,left:(i%cols)*width,top:Math.floor(i/cols)*height});const label=Buffer.from(`<svg width="${width}" height="25"><rect width="100%" height="100%" fill="#fff"/><text x="8" y="17" font-size="12" fill="#111">${p.name.replace(/&/g,'&amp;')}</text></svg>`);items.push({input:label,left:(i%cols)*width,top:Math.floor(i/cols)*height+height-25});}await sharp({create:{width:cols*width,height:rows*height,channels:3,background:'#ccc'}}).composite(items).png().toFile(`docs/qa/previews-${mode}.png`);}
