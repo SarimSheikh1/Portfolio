@@ -1,0 +1,31 @@
+import {chromium} from '@playwright/test';
+import {readFile} from 'node:fs/promises';
+const env=await readFile('.env','utf8');const username=env.match(/^OWNER_LOGIN=(.*)$/m)[1].trim();
+const browser=await chromium.launch({channel:'chrome',headless:true});
+const origin='http://127.0.0.1:8787';
+try{
+ const admin=await browser.newPage();
+ await admin.goto(origin);
+ await admin.getByRole('button',{name:'Admin Login',exact:true}).click();
+ await admin.getByLabel('Email or username').fill(username);
+ await admin.getByLabel('Password',{exact:true}).fill(process.env.CHECK_OWNER_PASSWORD);
+ await admin.locator('.project-account-form').getByRole('button',{name:'Login',exact:true}).click();
+ await admin.getByRole('heading',{name:'Mission control.'}).waitFor();
+ const session=await admin.request.get(origin+'/api/v1/session');if(!(await session.json()).authenticated)throw Error('Admin session missing');
+ const ctx=await browser.newContext();const viewer=await ctx.newPage();await viewer.goto(origin);
+ await viewer.locator('.public-account-actions').getByRole('button',{name:'Create account'}).click();
+ const email='qa+'+Date.now()+'@example.com';const password='qa-user-password-2026';
+ await viewer.getByLabel('Email',{exact:true}).fill(email);await viewer.getByLabel('Password',{exact:true}).fill(password);
+ await viewer.locator('.project-account-form').getByRole('button',{name:'Create account',exact:true}).click();
+ await viewer.locator('.project-links').first().getByRole('link',{name:'GitHub'}).waitFor();
+ const denied=await viewer.request.get(origin+'/api/v1/admin/projects');if(denied.status()!==401)throw Error('Viewer received admin access');
+ await viewer.getByRole('button',{name:'Logout',exact:true}).click();await viewer.locator('.public-account-actions').getByRole('button',{name:'Login',exact:true}).click();
+ await viewer.getByLabel('Email or username').fill(email);await viewer.getByLabel('Password',{exact:true}).fill(password);
+ await viewer.locator('.project-account-form').getByRole('button',{name:'Login',exact:true}).click();
+ await viewer.locator('.project-links').first().getByRole('link',{name:'GitHub'}).waitFor();
+ await viewer.reload();await viewer.getByRole('button',{name:'Logout',exact:true}).waitFor();
+ await viewer.getByRole('button',{name:'Logout',exact:true}).click();
+ const locked=await viewer.request.get(origin+'/api/v1/catalog');if(locked.status()!==401)throw Error('Logout failed to lock catalog');
+ console.log('PASS: real admin login and panel redirect; real public signup/login; persistent browser session; visitor admin denial; logout protection.');
+ await ctx.close();
+}finally{await browser.close()}
