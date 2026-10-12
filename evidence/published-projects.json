@@ -1,0 +1,637 @@
+{
+  "capturedAt": "2026-10-10T10:44:23.079Z",
+  "projects": [
+    {
+      "id": "github:1388658332",
+      "slug": "mardara-expense-tracker",
+      "name": "Mardara-Expense-Tracker",
+      "description": "A public project repository. Explore its source and available documentation.",
+      "overview": "This project is included from Sarim’s verified public GitHub collection. The available README describes its scope; documented features are not independently tested behavior.",
+      "category": "Creative websites",
+      "technologies": [
+        "HTML",
+        "JavaScript",
+        "CSS",
+        "Express",
+        "Node.js"
+      ],
+      "platform": "GitHub",
+      "repository": "https://github.com/SarimSheikh1/Mardara-Expense-Tracker",
+      "deployments": [],
+      "featured": 0,
+      "published": true,
+      "excluded": false,
+      "fork": false,
+      "archived": false,
+      "verified": true,
+      "status": "Live demo unavailable",
+      "updatedAt": "2026-09-26T06:39:49Z",
+      "checkedAt": null,
+      "desktop": {
+        "url": "/previews/mardara-expense-tracker-desktop.webp",
+        "thumbnail": "/previews/mardara-expense-tracker-desktop-640.webp",
+        "alt": "Mardara-Expense-Tracker genuine desktop repository HTML interface (scripts disabled) screenshot",
+        "capturedAt": "2026-10-10T11:55:44.856Z",
+        "width": 1440,
+        "height": 1000,
+        "source": "repository-capture",
+        "sourceURL": "https://raw.githubusercontent.com/SarimSheikh1/Mardara-Expense-Tracker/main/public/index.html"
+      },
+      "mobile": {
+        "url": "/previews/mardara-expense-tracker-mobile.webp",
+        "thumbnail": "/previews/mardara-expense-tracker-mobile-640.webp",
+        "alt": "Mardara-Expense-Tracker genuine mobile repository HTML interface (scripts disabled) screenshot",
+        "capturedAt": "2026-10-10T11:55:46.874Z",
+        "width": 390,
+        "height": 844,
+        "source": "repository-capture",
+        "sourceURL": "https://raw.githubusercontent.com/SarimSheikh1/Mardara-Expense-Tracker/main/public/index.html"
+      },
+      "features": [],
+      "readme": "# Mardara Expense Tracker\n\n**Track Your Money. Control Your Future.** A responsive, full-stack personal finance application built for beginners with Node.js, Express, SQLite, HTML, CSS and Vanilla JavaScript.\n\n## Features\n\n- Secure registration/login with bcrypt password hashing and JWT authentication\n- Private per-user income and expense records\n- Create, edit, delete, search and combine transaction filters\n- Monthly dashboard: income, expense, balance, budget, remaining budget, category breakdown\n- Monthly budgets with safe upsert behavior\n- User profile and password change\n- CSV export containing only the logged-in user's data\n- Responsive desktop, tablet and mobile layout, loading/empty states and notifications\n\n## Tech stack\n\nNode.js runs the server. Express provides REST APIs. SQLite is the local database through `better-sqlite3`. The browser UI uses HTML5, CSS3, Vanilla JavaScript and Fetch API.\n\n## Installation\n\n1. Open this folder in VS Code.\n2. Open the integrated terminal.\n3. Run:\n\n```bash\nnpm install\n```\n\n4. Create `.env` by copying `.env.example`. A local development `.env` is already supplied; replace `JWT_SECRET` before production.\n5. Start development server:\n\n```bash\nnpm run dev\n```\n\nFor production:\n\n```bash\nnpm start\n```\n\nOpen [http://localhost:5000](http://localhost:5000).\n\nThe application creates `database/expensepro.db` and all tables automatically when it starts.\n\n## Folder overview\n\n```\ndatabase/    SQLite connection and schema initialization\nmodels/      SQL data access functions\ncontrollers/ API request logic\nroutes/      REST endpoint definitions\nmiddleware/  JWT and validation/error middleware\nutils/       token and CSV helpers\npublic/      browser pages, styles and JavaScript\n```\n\n## API documentation\n\nAll protected endpoints require `Authorization: Bearer <token>`.\n\n| Area | Endpoint | Method | Purpose |\n|---|---|---|---|\n| Auth | `/api/auth/register` | POST | Register `{name,email,password}` |\n| Auth | `/api/auth/login` | POST | Login `{email,password}` |\n| Transactions | `/api/transactions` | GET/POST | List/create transactions |\n| Transactions | `/api/transactions/:id` | GET/PUT/DELETE | Read/update/delete owned record |\n| Budget | `/api/budgets` | GET/POST | List/save a monthly budget |\n| Budget | `/api/budgets/:id` | PUT/DELETE | Update/delete owned budget |\n| Dashboard | `/api/dashboard?month=9&year=2026` | GET | Monthly totals and summaries |\n| Export | `/api/export/csv` | GET | Download owned transactions CSV |\n| Profile | `/api/profile` | GET/PUT | Read/update account or password |\n\nExample transaction body:\n\n```json\n{\n  \"type\": \"expense\",\n  \"category\": \"Food\",\n  \"amount\": 2500,\n  \"description\": \"Monthly grocery\",\n  \"transaction_date\": \"2026-09-26\"\n}\n```\n\nResponses consistently use `{ \"success\": true, \"message\": \"...\", \"data\": {} }`; errors use `success: false` and an explanatory message.\n\n## Security notes\n\nPasswords are never returned and are hashed with bcrypt. JWT payloads contain only the user ID. Every transaction, budget, profile and export query uses the authenticated user ID, so changing an ID in a URL cannot expose another user's data. All database values use prepared statements and server-side input validation.\n\n## Testing checklist\n\n1. Register user A and log in.\n2. Add an income and an expense, then edit and delete one.\n3. Set a budget and verify the remaining amount on Dashboard.\n4. Search/filter records and export CSV.\n5. Log out, log in again, and verify data remains.\n6. Register user B and confirm B cannot see or access user A's IDs.\n\n## Beginner explanation (English + Roman Urdu)\n\n- **Node.js:** Runs JavaScript on the server. *Node.js backend ka kaam server chalana hai.*\n- **Express.js:** Creates routes such as `/api/transactions`. *Express.js APIs/routes banane ke liye use hota hai.*\n- **SQLite:** A small file-based database. *SQLite hamara local database hai jahan users aur transactions save hotay hain.*\n- **JWT:** A signed login token sent with protected requests. *JWT login ke baad user ko authenticate karta hai.*\n- **bcrypt:** Turns a password into a one-way hash. *bcrypt password ko plain text ki jagah secure hash mein save karta hai.*\n- **REST API:** A standard HTTP interface between frontend and backend. *Frontend Fetch API se backend ko request bhejta hai aur JSON response leta hai.*\n- **Login flow:** The server verifies bcrypt password, returns a JWT, and the frontend stores it in localStorage. Every later API request attaches it in the Authorization header.\n- **Saving a transaction:** The form sends data to `POST /api/transactions`; the server validates it and inserts it with the JWT user ID—not a user ID supplied by the browser.\n- **Balance:** `total income - total expenses`. *Dashboard isi formula se balance calculate karta hai.*\n- **Budget:** Each user gets one budget per month/year. Remaining budget is `budget - total expenses`; spending can exceed it but the dashboard warns the user.\n\n## Troubleshooting\n\n- If the server says `JWT_SECRET is required`, create `.env` from `.env.example`.\n- If port 5000 is busy, change `PORT` in `.env`.\n- Delete only `database/expensepro.db` if you intentionally want a completely fresh local database; it will be recreated at next start.\n",
+      "provenance": {
+        "description": "Honest unavailable description",
+        "technologies": "GitHub language metadata / README mention; not behavior tested",
+        "category": "README keyword classification; owner editable",
+        "repository": "GitHub public REST API",
+        "deployments": "GitHub homepage / public HTTP availability check"
+      },
+      "overrides": []
+    },
+    {
+      "id": "github:1217718897",
+      "slug": "sniper-shadow",
+      "name": "SNIPER-SHADOW",
+      "description": "A public project from Sarim’s GitHub collection.",
+      "overview": "Explore the project’s public source and available live experience.",
+      "category": "Games",
+      "technologies": [
+        "HTML"
+      ],
+      "platform": "GitHub",
+      "repository": "https://github.com/SarimSheikh1/SNIPER-SHADOW",
+      "deployments": [
+        "https://sniper-shadow-one.vercel.app"
+      ],
+      "featured": 0,
+      "published": true,
+      "excluded": false,
+      "fork": false,
+      "archived": false,
+      "verified": true,
+      "status": "reachable",
+      "updatedAt": "2026-04-24T01:55:12Z",
+      "checkedAt": "2026-10-10T11:53:17.962Z",
+      "desktop": {
+        "url": "/previews/sniper-shadow-desktop.webp",
+        "thumbnail": "/previews/sniper-shadow-desktop-640.webp",
+        "alt": "SNIPER-SHADOW genuine desktop public homepage screenshot",
+        "capturedAt": "2026-10-10T11:53:13.425Z",
+        "width": 1440,
+        "height": 1000,
+        "source": "capture",
+        "sourceURL": "https://sniper-shadow-one.vercel.app"
+      },
+      "mobile": {
+        "url": "/previews/sniper-shadow-mobile.webp",
+        "thumbnail": "/previews/sniper-shadow-mobile-640.webp",
+        "alt": "SNIPER-SHADOW genuine mobile public homepage screenshot",
+        "capturedAt": "2026-10-10T11:53:17.948Z",
+        "width": 390,
+        "height": 844,
+        "source": "capture",
+        "sourceURL": "https://sniper-shadow-one.vercel.app"
+      },
+      "features": [],
+      "readme": "",
+      "provenance": {
+        "repository": "Verified public GitHub REST metadata"
+      },
+      "overrides": []
+    },
+    {
+      "id": "github:1196777725",
+      "slug": "target-rush",
+      "name": "TARGET-RUSH",
+      "description": "A public project repository. Explore its source and available documentation.",
+      "overview": "This project is included from Sarim’s verified public GitHub collection. The available README describes its scope; documented features are not independently tested behavior.",
+      "category": "Creative websites",
+      "technologies": [
+        "HTML"
+      ],
+      "platform": "GitHub",
+      "repository": "https://github.com/SarimSheikh1/TARGET-RUSH",
+      "deployments": [
+        "https://targetrush-six.vercel.app"
+      ],
+      "featured": 0,
+      "published": true,
+      "excluded": false,
+      "fork": false,
+      "archived": false,
+      "verified": true,
+      "status": "reachable",
+      "updatedAt": "2026-04-01T02:06:35Z",
+      "checkedAt": "2026-10-10T11:53:26.276Z",
+      "desktop": {
+        "url": "/previews/target-rush-desktop.webp",
+        "thumbnail": "/previews/target-rush-desktop-640.webp",
+        "alt": "TARGET-RUSH genuine desktop public homepage screenshot",
+        "capturedAt": "2026-10-10T11:53:22.589Z",
+        "width": 1440,
+        "height": 1000,
+        "source": "capture",
+        "sourceURL": "https://targetrush-six.vercel.app"
+      },
+      "mobile": {
+        "url": "/previews/target-rush-mobile.webp",
+        "thumbnail": "/previews/target-rush-mobile-640.webp",
+        "alt": "TARGET-RUSH genuine mobile public homepage screenshot",
+        "capturedAt": "2026-10-10T11:53:26.267Z",
+        "width": 390,
+        "height": 844,
+        "source": "capture",
+        "sourceURL": "https://targetrush-six.vercel.app"
+      },
+      "features": [],
+      "readme": "",
+      "provenance": {
+        "description": "Honest unavailable description",
+        "technologies": "GitHub language metadata / README mention; not behavior tested",
+        "category": "README keyword classification; owner editable",
+        "repository": "GitHub public REST API",
+        "deployments": "GitHub homepage / public HTTP availability check"
+      },
+      "overrides": []
+    },
+    {
+      "id": "github:1394520719",
+      "slug": "mardara-travel-agent",
+      "name": "Mardara_Travel_Agent",
+      "description": "A public project repository. Explore its source and available documentation.",
+      "overview": "This project is included from Sarim’s verified public GitHub collection. The available README describes its scope; documented features are not independently tested behavior.",
+      "category": "Creative websites",
+      "technologies": [
+        "HTML"
+      ],
+      "platform": "GitHub",
+      "repository": "https://github.com/SarimSheikh1/Mardara_Travel_Agent",
+      "deployments": [
+        "https://mardaratravelagent.vercel.app"
+      ],
+      "featured": 0,
+      "published": true,
+      "excluded": false,
+      "fork": false,
+      "archived": false,
+      "verified": true,
+      "status": "reachable",
+      "updatedAt": "2026-09-29T06:38:12Z",
+      "checkedAt": "2026-10-10T11:53:41.788Z",
+      "desktop": {
+        "url": "/previews/mardara-travel-agent-desktop.webp",
+        "thumbnail": "/previews/mardara-travel-agent-desktop-640.webp",
+        "alt": "Mardara_Travel_Agent genuine desktop public homepage screenshot",
+        "capturedAt": "2026-10-10T11:53:33.859Z",
+        "width": 1440,
+        "height": 1000,
+        "source": "capture",
+        "sourceURL": "https://mardaratravelagent.vercel.app"
+      },
+      "mobile": {
+        "url": "/previews/mardara-travel-agent-mobile.webp",
+        "thumbnail": "/previews/mardara-travel-agent-mobile-640.webp",
+        "alt": "Mardara_Travel_Agent genuine mobile public homepage screenshot",
+        "capturedAt": "2026-10-10T11:53:41.771Z",
+        "width": 390,
+        "height": 844,
+        "source": "capture",
+        "sourceURL": "https://mardaratravelagent.vercel.app"
+      },
+      "features": [],
+      "readme": "",
+      "provenance": {
+        "description": "Honest unavailable description",
+        "technologies": "GitHub language metadata / README mention; not behavior tested",
+        "category": "README keyword classification; owner editable",
+        "repository": "GitHub public REST API",
+        "deployments": "GitHub homepage / public HTTP availability check"
+      },
+      "overrides": []
+    },
+    {
+      "id": "github:1394611925",
+      "slug": "mardara-gym",
+      "name": "Mardara-gym-",
+      "description": "A fitness website for discovering training, programmes, and gym services.",
+      "overview": "This project is included from Sarim’s verified public GitHub collection. The available README describes its scope; documented features are not independently tested behavior.",
+      "category": "Creative websites",
+      "technologies": [
+        "HTML",
+        "JavaScript",
+        "Node.js"
+      ],
+      "platform": "Vercel",
+      "repository": "https://github.com/SarimSheikh1/Mardara-gym-",
+      "deployments": [
+        "https://mardara-gym.vercel.app/"
+      ],
+      "featured": 3,
+      "published": true,
+      "excluded": false,
+      "fork": false,
+      "archived": false,
+      "verified": true,
+      "status": "reachable",
+      "updatedAt": "2026-10-03T07:33:04Z",
+      "checkedAt": "2026-10-10T11:24:00.224Z",
+      "desktop": {
+        "url": "/previews/mardara-gym-desktop.webp",
+        "thumbnail": "/previews/mardara-gym-desktop-640.webp",
+        "alt": "Mardara-gym- genuine desktop public homepage screenshot",
+        "capturedAt": "2026-10-10T11:23:56.067Z",
+        "width": 1440,
+        "height": 1000,
+        "source": "capture",
+        "sourceURL": "https://mardara-gym.vercel.app/"
+      },
+      "mobile": {
+        "url": "/previews/mardara-gym-mobile.webp",
+        "thumbnail": "/previews/mardara-gym-mobile-640.webp",
+        "alt": "Mardara-gym- genuine mobile public homepage screenshot",
+        "capturedAt": "2026-10-10T11:24:00.214Z",
+        "width": 390,
+        "height": 844,
+        "source": "capture",
+        "sourceURL": "https://mardara-gym.vercel.app/"
+      },
+      "features": [],
+      "readme": "# Mardavex Fitness\n\nOriginal premium gym website and management-system foundation.\n\n## Run locally\n\nRequires Node.js 18+.\n\n```bash\nnpm start\n```\n\nOpen `http://localhost:3000`. The starter is intentionally dependency-light so the UI can be reviewed immediately. The health endpoint is available at `/api/health`.\n\n## Roadmap\n\nThe visual foundation is in `index.html`. The next layers will add persistent data models, authentication/RBAC, member management, attendance, billing, ledgers, reports, trainer/member dashboards, uploads, and print-ready receipts.\n",
+      "provenance": {
+        "description": "Honest unavailable description",
+        "technologies": "GitHub language metadata / README mention; not behavior tested",
+        "category": "README keyword classification; owner editable",
+        "repository": "GitHub public REST API",
+        "deployments": "GitHub homepage / public HTTP availability check"
+      },
+      "overrides": []
+    },
+    {
+      "id": "github:1388639370",
+      "slug": "mardara-speed",
+      "name": "Mardara_Speed",
+      "description": "A public project from Sarim’s GitHub collection.",
+      "overview": "Explore the project’s public source and available live experience.",
+      "category": "Utilities",
+      "technologies": [],
+      "platform": "GitHub",
+      "repository": "https://github.com/SarimSheikh1/Mardara_Speed",
+      "deployments": [
+        "https://mardara-speed.vercel.app"
+      ],
+      "featured": 0,
+      "published": true,
+      "excluded": false,
+      "fork": false,
+      "archived": false,
+      "verified": true,
+      "status": "reachable",
+      "updatedAt": "2026-10-03T07:40:53Z",
+      "checkedAt": "2026-10-10T11:53:54.317Z",
+      "desktop": {
+        "url": "/previews/mardara-speed-desktop.webp",
+        "thumbnail": "/previews/mardara-speed-desktop-640.webp",
+        "alt": "Mardara_Speed genuine desktop public homepage screenshot",
+        "capturedAt": "2026-10-10T11:53:49.363Z",
+        "width": 1440,
+        "height": 1000,
+        "source": "capture",
+        "sourceURL": "https://mardara-speed.vercel.app"
+      },
+      "mobile": {
+        "url": "/previews/mardara-speed-mobile.webp",
+        "thumbnail": "/previews/mardara-speed-mobile-640.webp",
+        "alt": "Mardara_Speed genuine mobile public homepage screenshot",
+        "capturedAt": "2026-10-10T11:53:54.299Z",
+        "width": 390,
+        "height": 844,
+        "source": "capture",
+        "sourceURL": "https://mardara-speed.vercel.app"
+      },
+      "features": [],
+      "readme": "",
+      "provenance": {
+        "repository": "Verified public GitHub REST metadata"
+      },
+      "overrides": []
+    },
+    {
+      "id": "github:1412867872",
+      "slug": "kinetiq-studio",
+      "name": "KINETIQ-STUDIO",
+      "description": "A creative studio website with expressive typography and visual direction.",
+      "overview": "This project is included from Sarim’s verified public GitHub collection. The available README describes its scope; documented features are not independently tested behavior.",
+      "category": "Creative websites",
+      "technologies": [
+        "TypeScript",
+        "CSS",
+        "JavaScript",
+        "HTML",
+        "React",
+        "Vite",
+        "Express",
+        "Tailwind",
+        "Node.js",
+        "GSAP"
+      ],
+      "platform": "Vercel",
+      "repository": "https://github.com/SarimSheikh1/KINETIQ-STUDIO",
+      "deployments": [
+        "https://client-alpha-three-56.vercel.app/"
+      ],
+      "featured": 7,
+      "published": true,
+      "excluded": false,
+      "fork": false,
+      "archived": false,
+      "verified": true,
+      "status": "reachable",
+      "updatedAt": "2026-10-10T07:54:19Z",
+      "checkedAt": "2026-10-10T11:23:51.313Z",
+      "desktop": {
+        "url": "/previews/kinetiq-studio-desktop.webp",
+        "thumbnail": "/previews/kinetiq-studio-desktop-640.webp",
+        "alt": "KINETIQ-STUDIO genuine desktop public homepage screenshot",
+        "capturedAt": "2026-10-10T11:23:47.664Z",
+        "width": 1440,
+        "height": 1000,
+        "source": "capture",
+        "sourceURL": "https://client-alpha-three-56.vercel.app/"
+      },
+      "mobile": {
+        "url": "/previews/kinetiq-studio-mobile.webp",
+        "thumbnail": "/previews/kinetiq-studio-mobile-640.webp",
+        "alt": "KINETIQ-STUDIO genuine mobile public homepage screenshot",
+        "capturedAt": "2026-10-10T11:23:51.305Z",
+        "width": 390,
+        "height": 844,
+        "source": "capture",
+        "sourceURL": "https://client-alpha-three-56.vercel.app/"
+      },
+      "features": [],
+      "readme": "# KINETIQ STUDIO\n\nAn original, editorial creative-studio experience built with React, TypeScript, Vite, Tailwind CSS, GSAP, Motion, React Three Fiber and an Express/MongoDB API. All project artwork and illustrated portraits are original local SVGs. Projects, people, metrics and seeded vacancies are explicitly fictional.\n\n## Run locally\n\nRequires Node.js 22.12+ and MongoDB 7+ (local MongoDB or an Atlas connection).\n\n```powershell\nnpm install\nCopy-Item .env.example .env\n# Edit .env: set MONGODB_URI and a random SESSION_SECRET of 32+ characters.\nnpm run seed\n$env:ADMIN_PASSWORD = 'your-unique-password-at-least-14-characters'\nnpm run admin:create\nRemove-Item Env:ADMIN_PASSWORD\nnpm run dev\n```\n\nOpen http://localhost:5173. The API runs on port 4000. Administrator creation prompts for an email and reads the password from the current terminal environment; no public registration or default credentials exist. The seed command inserts missing demo records without overwriting edited content.\n\nWithout an API connection the public website shows bundled demo content. It does **not** simulate successful form submission. Applications are disabled until live database content is available. Contact displays actual API failures. Restart or reload after database seeding.\n\n## Pages and content\n\n`/`, `/about`, `/services`, `/work`, `/work/:slug`, `/process`, `/team`, `/journal`, `/journal/:slug`, `/careers`, `/careers/:slug`, `/contact`, `/admin` and a custom 404. Vite dev and the production Express server support deep links.\n\nThe dashboard includes an overview, create/edit/delete for projects, articles, people and positions; portfolio display order and featured flags; image uploads; journal draft/publish states; enquiry filters/statuses and career application review/statuses. Editors have read-only access; administrators have write access. Roles with existing applications cannot be deleted; close them to preserve references. Lists currently load up to 1,000 records per module.\n\nForm submissions are stored in MongoDB for administrator review. Email delivery is not configured. Seeded roles are sample positions; replace them and turn off the sample flag before using the site for real recruitment.\n\n## Build and validation\n\n```powershell\nnpm run lint\nnpm test\nnpm run build\nnpm start\n```\n\nFor the temporary database integration scenario and browser suite:\n\n```powershell\n$env:RUN_DB_TESTS = '1'\nnpm test\nRemove-Item Env:RUN_DB_TESTS\nnpm exec -w client -- playwright test\n```\n\nThe first database test run downloads a temporary MongoDB binary. Browser tests use installed Microsoft Edge and an isolated dev server on port 5178.\n\nProduction serves `client/dist` from Express. Set `NODE_ENV=production`, a strong `SESSION_SECRET`, the deployed `CLIENT_ORIGIN`, and a MongoDB connection. Serve the entire app under the same HTTPS origin. Secure cookies require HTTPS. Set `TRUST_PROXY=1` only when a trusted reverse proxy is in front of Express. The default port is 4000.\n\nThe production Content Security Policy allows local application code and images. Media URLs are restricted by validation. Deployments need persistent storage for `UPLOAD_DIR`; the local upload adapter currently stores validated raster images with random names in that directory. Back up MongoDB and uploads together. Configure a dedicated object-storage adapter before deploying on ephemeral disks or scaling across multiple servers. Do not expose MongoDB directly to the public internet.\n\n## Architecture\n\n- `client/src/pages`: lazy-loaded routes and functional public/admin interfaces.\n- `client/src/animations`: scoped GSAP timelines, ScrollTrigger, Lenis integration, intro and custom cursor with cleanup.\n- `client/src/three`: procedural pointer-responsive sculpture with local lighting and a mobile/reduced-motion graphic fallback.\n- `client/src/contexts`: live API content with explicitly fictional offline previews.\n- `client/public/images`: original SVG concept artwork and portraits.\n- `server/src/models`: seven Mongoose models, unique slug/email indexes and timestamps.\n- `server/src/validators`: Zod allowlists for mutations, submissions and safe URLs.\n- `server/src/app.js`: rate limits, origin checks, Helmet, Mongo-backed sessions, authentication, CSRF tokens, authorization, verified uploads and API error handling.\n- `shared/content.js`: original demo records shared by seed scripts and frontend preview.\n- `server/test`: security and validation tests without a database dependency.\n\n## Motion and accessibility\n\nTypography and route reveals, scroll parallax, procedural 3D rotation and pointer camera movement, custom cursor, Flip filtering, animated service accordions, SVG connector drawing, progress indicator, metric counters, responsive menu, project hover previews, ticker, focus states and closing CTA interactions. Lenis and ScrollTrigger share a GSAP ticker. Reduced-motion users receive static layouts and a 2D sculpture. Mobile galleries use native touch scrolling instead of pinned scroll hijacking. Native links, labelled inputs, visible focus, a skip link, and real form errors preserve essential functionality.\n\n## Verification scope\n\nSee `TEST_RESULTS.md` for executed checks and remaining environment-dependent verification. Mongo-backed end-to-end authentication, storage and uploads require a running database; unit/security tests do not substitute for those checks.\n",
+      "provenance": {
+        "description": "Build review of public repository/README",
+        "technologies": "GitHub language metadata / README mention; not behavior tested",
+        "category": "README keyword classification; owner editable",
+        "repository": "GitHub public REST API",
+        "deployments": "GitHub homepage / public HTTP availability check"
+      },
+      "overrides": []
+    },
+    {
+      "id": "github:1412807108",
+      "slug": "aerion-drive",
+      "name": "AERION-DRIVE",
+      "description": "An automotive showcase with an immersive, premium visual experience.",
+      "overview": "This project is included from Sarim’s verified public GitHub collection. The available README describes its scope; documented features are not independently tested behavior.",
+      "category": "Business",
+      "technologies": [
+        "TypeScript",
+        "JavaScript",
+        "CSS",
+        "HTML",
+        "React",
+        "Vite",
+        "Express",
+        "Tailwind",
+        "Node.js",
+        "GSAP"
+      ],
+      "platform": "Vercel",
+      "repository": "https://github.com/SarimSheikh1/AERION-DRIVE",
+      "deployments": [
+        "https://aerion-drive.vercel.app/"
+      ],
+      "featured": 8,
+      "published": true,
+      "excluded": false,
+      "fork": false,
+      "archived": false,
+      "verified": true,
+      "status": "reachable",
+      "updatedAt": "2026-10-10T07:55:40Z",
+      "checkedAt": "2026-10-10T11:23:43.653Z",
+      "desktop": {
+        "url": "/previews/aerion-drive-desktop.webp",
+        "thumbnail": "/previews/aerion-drive-desktop-640.webp",
+        "alt": "AERION-DRIVE genuine desktop public homepage screenshot",
+        "capturedAt": "2026-10-10T11:23:39.742Z",
+        "width": 1440,
+        "height": 1000,
+        "source": "capture",
+        "sourceURL": "https://aerion-drive.vercel.app/"
+      },
+      "mobile": {
+        "url": "/previews/aerion-drive-mobile.webp",
+        "thumbnail": "/previews/aerion-drive-mobile-640.webp",
+        "alt": "AERION-DRIVE genuine mobile public homepage screenshot",
+        "capturedAt": "2026-10-10T11:23:43.641Z",
+        "width": 390,
+        "height": 844,
+        "source": "capture",
+        "sourceURL": "https://aerion-drive.vercel.app/"
+      },
+      "features": [],
+      "readme": "# AERION DRIVE\n\nAn original automotive concept exhibition built with React, TypeScript, Vite, Tailwind, React Router, GSAP, Motion, Lenis, React Three Fiber and Drei. The Express API uses MongoDB/Mongoose, validated enquiries and a private cookie-authenticated administration studio.\n\nThe five AERION concepts, performance figures, prices and contact details are fictional demonstration content. Photography and background-free cutouts show real cars as visual references; those manufacturers are not affiliated with AERION. No scheduling, payment, email delivery or real manufacturer integration is implied.\n\n## Complete local studio\n\n```sh\nnpm install\nnpm run dev:full\n```\n\nThis starts the frontend, API and a real loopback-only MongoDB process with authentication. The first run downloads MongoDB if it is not cached. Open http://localhost:5173. A randomly generated administrator login is saved in `.local/admin-credentials.json`; open http://localhost:5173/admin to sign in. Credentials, sessions and the database persist between runs in the Git-ignored `.local/` directory. Ctrl+C stops the owned processes while preserving the local database. This is a local development convenience; production uses your separately managed MongoDB.\n\n## Run in VS Code\n\nRequirements: Node.js 24 LTS, npm, MongoDB Community locally or a MongoDB Atlas connection. Open this directory in VS Code.\n\n```sh\nnpm install\n```\n\nOn Windows PowerShell where execution policy blocks `npm.ps1`, use `npm.cmd` for each command below.\n\nCopy `.env.example` to `server/.env`, supply your MongoDB URI, and generate a session secret:\n\n```sh\nnode -e \"console.log(require('crypto').randomBytes(48).toString('hex'))\"\n```\n\nSet `ADMIN_EMAIL` and a unique `ADMIN_PASSWORD` of at least 12 characters in `server/.env`, then seed:\n\n```sh\nnpm run seed\nnpm run dev\n```\n\nOpen **http://localhost:5173**. API: **http://localhost:4000/api**. Admin: **http://localhost:5173/admin**. The seed preserves existing records and does not reset existing passwords. Remove the seed password from the environment after provisioning the administrator. There is no public registration or default password.\n\nWithout MongoDB, development starts with a read-only fictional catalogue. Configurations still save on the visitor's device. Enquiries and administrator login report an unavailable service and are never silently stored in memory. Production requires a reachable MongoDB database and session secret.\n\n## Experience\n\n| Route              | Features                                                                                                                                                                                                 |\n| ------------------ | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |\n| `/`                | Mouse-controlled 60-car GSAP perspective rail, five-stage pinned vehicle story, collection, cockpit and enquiry invitation                                                                                                           |\n| `/explore`         | API-backed catalogue, category filters, price/range sorting                                                                                                                                              |\n| `/vehicles/:slug`  | Vehicle presentation, specifications, media and next steps                                                                                                                                               |\n| `/configurator`    | Detailed Ferrari reference vehicle; drag orbit, pinch/wheel zoom, paint interpolation and alloy finishes, camera angles, lighting, three environments, fullscreen, local save/restore and shareable URLs |\n| `/compare`         | Up to three vehicles, nine specification rows, difference highlighting, remove/reset                                                                                                                     |\n| `/technology`      | Interactive 3D architectural presentation and expandable technical information                                                                                                                           |\n| `/story`           | Editorial brand story and design principles                                                                                                                                                              |\n| `/gallery`         | Category filters, editorial/grid layout, image lightbox, arrows, Escape, focus trap and swipe                                                                                                            |\n| `/book-test-drive` | Validated enquiry with model, date/time, location and customer details                                                                                                                                   |\n| `/contact`         | Department-based enquiries, fictional contact information and FAQ                                                                                                                                        |\n| `/admin`           | Login/logout, statistics, enquiry status updates/search, vehicle/specification editing and gallery management                                                                                            |\n\nThe homepage presents 60 distinct, background-free real car images on a diagonal perspective rail inspired by the supplied A24 reference. Mouse wheel, trackpad, horizontal drag, touch swipe, keyboard arrows and navigation buttons control its GSAP movement. Neighbouring cars move together, with depth, tilt and smooth settling. It does not autoplay. Gallery references are deduplicated by URL.\n\nThe 3D studio uses the detailed Ferrari 458 Italia reference model distributed in the official Three.js examples, credited to vicent091036. Paint, alloy finish, cameras, environments and lighting remain interactive. AERION model selections choose illustrative specifications, not five separate Ferrari geometries. The GLB and Draco decoder are served locally. Photography and transparent WebP cutouts are also local assets.\n\nImage sources and licence details are in `client/public/credits.txt` and `shared/car-cutouts.json`. PNGimg cutouts use **CC BY-NC 4.0**, suitable for this noncommercial concept exhibition; commercial deployment needs appropriately licensed replacement images. Unsplash photographs use the Unsplash License. Original SVG studies remain in the repository but are no longer the displayed vehicle photography. The 60 optimized cutouts total approximately 5.3 MB; only nearby rail images mount in the DOM.\n\n## Project structure\n\n```text\nclient/\n  public/images/          Real photography, transparent cutouts and legacy studies\n  src/App.tsx            Navigation, home exhibition, motion and route shell\n  src/pages/Pages.tsx     Catalogue, studio, comparison, forms and admin\n  src/three/CarScene.tsx  Detailed GLB reference vehicle and real camera controls\n  src/styles/main.css    Responsive theme, components and reduced motion\nserver/\n  src/app.js             Express API, authentication, validation, limits\n  src/models.js          MongoDB schemas and repository\n  src/validation.js      Zod request schemas\n  src/index.js           Environment, database and persistent session startup\n  src/seed.js            Safe initial fictional data/admin provisioning\n  test/api.test.js       API and security integration tests\nshared/vehicles.json     Consistent fictional vehicle dataset\ntests/                   Desktop/mobile browser tests\n```\n\n## Validation commands\n\n```sh\nnpm run typecheck\nnpm run lint\nnpm test\nnpm run test:mongo\nnpm run build\nnpm run test:browser\nnpm run test:fullstack\nnode scripts/verify-car-assets.mjs\n```\n\nBrowser tests use installed Google Chrome via Playwright. The outage UI check intercepts one contact request with an explicit HTTP 503 response. `test:mongo` launches an isolated real MongoDB process and checks seed preservation, submissions, indexes and persisted sessions across an API restart. `test:fullstack` starts separate frontend/API test ports and verifies successful submissions plus structured admin editing against real MongoDB on desktop and mobile. These isolated tests do not modify the `.local/database` development data. See `TEST_RESULTS.md` for actual verification.\n\n## Production\n\n```sh\nnpm ci\nnpm run build\n```\n\nServe `client/dist` with an HTTPS static host that rewrites frontend routes to `index.html`. Route `/api/*` on the same public origin to the Node process. Run the API with `NODE_ENV=production`, `MONGODB_URI`, a random `SESSION_SECRET`, `CLIENT_ORIGIN=https://your-host.example` and `PORT` supplied through your deployment's secret manager, then `npm start`.\n\nProduction cookies are HTTP-only, secure and SameSite Strict. Sessions persist in MongoDB. TLS termination must be at one trusted reverse proxy (the API trusts one proxy hop in production). Match `CLIENT_ORIGIN` exactly; it is also checked for mutating requests. Helmet, body size limits, global/enquiry/login rate limits and server validation are enabled. If deploying the client with a different origin, deliberately adapt cookie/CORS policy rather than disabling origin protection. Do not put secrets in Vite environment variables.\n\nAdmin vehicle/gallery media accepts local `/images/` URLs or HTTPS URLs; it manages references, not file uploads. Enquiry status means `new`, `reviewing`, `contacted` or `closed`, never a scheduled confirmation. Add a real scheduling/mail integration separately if needed.\n\nFor the full endpoint contract, read [server/README.md](server/README.md).\n\n## Accessibility and performance\n\nKeyboard navigation, visible focus, a skip link, labelled inputs, native validation, gallery focus management and reduced-motion behavior are implemented. Mobile navigation and touch camera controls have deliberate layouts. Rendering caps device pixel ratio at 1.5; shadow maps and procedural geometry are bounded. Scene geometries dispose on unmount and ScrollTrigger/Lenis subscriptions clean up. Route and 3D loading have fallbacks; the application has a recoverable error boundary.\n\nNo Lighthouse score is claimed. A production service still needs environment configuration, hosting, monitoring, commercially suitable media rights and any business integrations before public use.\n",
+      "provenance": {
+        "description": "Build review of public repository/README",
+        "technologies": "GitHub language metadata / README mention; not behavior tested",
+        "category": "README keyword classification; owner editable",
+        "repository": "GitHub public REST API",
+        "deployments": "GitHub homepage / public HTTP availability check"
+      },
+      "overrides": []
+    },
+    {
+      "id": "github:1402836434",
+      "slug": "todo-app",
+      "name": "todo-app",
+      "description": "A public project repository. Explore its source and available documentation.",
+      "overview": "This project is included from Sarim’s verified public GitHub collection. The available README describes its scope; documented features are not independently tested behavior.",
+      "category": "Creative websites",
+      "technologies": [
+        "JavaScript",
+        "CSS",
+        "HTML"
+      ],
+      "platform": "GitHub",
+      "repository": "https://github.com/SarimSheikh1/todo-app",
+      "deployments": [],
+      "featured": 5,
+      "published": true,
+      "excluded": false,
+      "fork": false,
+      "archived": false,
+      "verified": true,
+      "status": "Live demo unavailable",
+      "updatedAt": "2026-10-03T07:51:22Z",
+      "checkedAt": "2026-10-10T10:49:01.758Z",
+      "desktop": {
+        "url": "/previews/todo-app-desktop.webp",
+        "thumbnail": "/previews/todo-app-desktop-640.webp",
+        "alt": "todo-app genuine desktop repository HTML interface (scripts disabled) screenshot",
+        "capturedAt": "2026-10-10T11:55:50.362Z",
+        "width": 1440,
+        "height": 1000,
+        "source": "repository-capture",
+        "sourceURL": "https://raw.githubusercontent.com/SarimSheikh1/todo-app/main/public/index.html"
+      },
+      "mobile": {
+        "url": "/previews/todo-app-mobile.webp",
+        "thumbnail": "/previews/todo-app-mobile-640.webp",
+        "alt": "todo-app genuine mobile repository HTML interface (scripts disabled) screenshot",
+        "capturedAt": "2026-10-10T11:55:52.117Z",
+        "width": 390,
+        "height": 844,
+        "source": "repository-capture",
+        "sourceURL": "https://raw.githubusercontent.com/SarimSheikh1/todo-app/main/public/index.html"
+      },
+      "features": [],
+      "readme": "",
+      "provenance": {
+        "description": "Honest unavailable description",
+        "technologies": "GitHub language metadata / README mention; not behavior tested",
+        "category": "README keyword classification; owner editable",
+        "repository": "GitHub public REST API",
+        "deployments": "GitHub homepage / public HTTP availability check"
+      },
+      "overrides": []
+    },
+    {
+      "id": "github:1409870893",
+      "slug": "royalvows",
+      "name": "ROYALVOWS",
+      "description": "An elegant event and wedding website, built around moments that matter.",
+      "overview": "This project is included from Sarim’s verified public GitHub collection. The available README describes its scope; documented features are not independently tested behavior.",
+      "category": "Communication",
+      "technologies": [
+        "TypeScript",
+        "CSS",
+        "JavaScript",
+        "HTML",
+        "React",
+        "Express",
+        "Node.js"
+      ],
+      "platform": "Vercel",
+      "repository": "https://github.com/SarimSheikh1/ROYALVOWS",
+      "deployments": [
+        "https://royalvows-three.vercel.app/"
+      ],
+      "featured": 9,
+      "published": true,
+      "excluded": false,
+      "fork": false,
+      "archived": false,
+      "verified": true,
+      "status": "reachable",
+      "updatedAt": "2026-10-10T08:04:23Z",
+      "checkedAt": "2026-10-10T11:23:29.796Z",
+      "desktop": {
+        "url": "/previews/royalvows-desktop.webp",
+        "thumbnail": "/previews/royalvows-desktop-640.webp",
+        "alt": "ROYALVOWS genuine desktop public homepage screenshot",
+        "capturedAt": "2026-10-10T11:23:25.357Z",
+        "width": 1440,
+        "height": 1000,
+        "source": "capture",
+        "sourceURL": "https://royalvows-three.vercel.app/"
+      },
+      "mobile": {
+        "url": "/previews/royalvows-mobile.webp",
+        "thumbnail": "/previews/royalvows-mobile-640.webp",
+        "alt": "ROYALVOWS genuine mobile public homepage screenshot",
+        "capturedAt": "2026-10-10T11:23:29.786Z",
+        "width": 390,
+        "height": 844,
+        "source": "capture",
+        "sourceURL": "https://royalvows-three.vercel.app/"
+      },
+      "features": [],
+      "readme": "# RoyalVows\n\nEvery Love Story Deserves a Palace.\n\nThe React/TypeScript frontend, Express API and MongoDB business platform are in [royalvows](royalvows/README.md). Work is committed and pushed to this repository in logical phases.\n\n## Run a local demo\n\nInstall Node.js 24, then open PowerShell in this repository:\n\n```powershell\ncd royalvows\nnpm ci\nnpm run demo\n```\n\nOpen http://localhost:5173. This uses a **real temporary MongoDB replica set**, not browser storage. Randomized administrator credentials are written privately to `.runtime/demo-access.txt` (ignored by Git). Demo data disappears when the launcher stops. For persistent storage use the Docker or Atlas setup in the detailed README.\n\nSee [feature status](royalvows/FEATURE_STATUS.md) for implemented features, executed checks and remaining limitations. Live merchant gateways, messaging providers and production deployment are not configured.\n",
+      "provenance": {
+        "description": "Build review of public repository/README",
+        "technologies": "GitHub language metadata / README mention; not behavior tested",
+        "category": "README keyword classification; owner editable",
+        "repository": "GitHub public REST API",
+        "deployments": "GitHub homepage / public HTTP availability check"
+      },
+      "overrides": []
+    },
+    {
+      "id": "github:1405256193",
+      "slug": "nexagen-solution-website",
+      "name": "-Nexagen-Solution-website",
+      "description": "A digital services website with a bold, modern agency experience.",
+      "overview": "This project is included from Sarim’s verified public GitHub collection. The available README describes its scope; documented features are not independently tested behavior.",
+      "category": "Business",
+      "technologies": [
+        "JavaScript",
+        "CSS",
+        "HTML",
+        "Python",
+        "Node.js"
+      ],
+      "platform": "Vercel",
+      "repository": "https://github.com/SarimSheikh1/-Nexagen-Solution-website",
+      "deployments": [
+        "https://nexagen-solution-website.vercel.app/"
+      ],
+      "featured": 10,
+      "published": true,
+      "excluded": false,
+      "fork": false,
+      "archived": false,
+      "verified": true,
+      "status": "reachable",
+      "updatedAt": "2026-10-10T09:51:27Z",
+      "checkedAt": "2026-10-10T11:23:19.468Z",
+      "desktop": {
+        "url": "/previews/nexagen-solution-website-desktop.webp",
+        "thumbnail": "/previews/nexagen-solution-website-desktop-640.webp",
+        "alt": "-Nexagen-Solution-website genuine desktop public homepage screenshot",
+        "capturedAt": "2026-10-10T11:23:15.481Z",
+        "width": 1440,
+        "height": 1000,
+        "source": "capture",
+        "sourceURL": "https://nexagen-solution-website.vercel.app/"
+      },
+      "mobile": {
+        "url": "/previews/nexagen-solution-website-mobile.webp",
+        "thumbnail": "/previews/nexagen-solution-website-mobile-640.webp",
+        "alt": "-Nexagen-Solution-website genuine mobile public homepage screenshot",
+        "capturedAt": "2026-10-10T11:23:19.458Z",
+        "width": 390,
+        "height": 844,
+        "source": "capture",
+        "sourceURL": "https://nexagen-solution-website.vercel.app/"
+      },
+      "features": [],
+      "readme": "# Nexagen Solution\n\nRedesigned in the original HTML/CSS/JavaScript architecture. No application framework, runtime dependencies, private credentials or server integration are required.\n\n## Run and verify\n\nRequires Node.js 22 or later. In Windows PowerShell use `npm.cmd` if execution policy blocks `npm`.\n\n```powershell\nnpm.cmd install\nnpm.cmd run dev\n```\n\nOpen http://127.0.0.1:4173. Keep the preview running in one terminal, then run these in another:\n\n```powershell\nnpm.cmd run check\nnpm.cmd test\nnpm.cmd run build\n```\n\nThe browser tests use installed Google Chrome at `C:/Program Files/Google/Chrome/Application/chrome.exe`. Adjust `tools/verify.mjs` if Chrome is elsewhere. No browser download is required. Production output is in `dist/`; serve that directory with any static web host. No publishing has been performed.\n\n## Changed files and organization\n\n- `index.html`: semantic shared header, footer, contact dock and help panel.\n- `style.css`: unified tokens, responsive layout, focus states, reduced motion and reserved contact dock.\n- `script.js`: hash routing, page rendering, search, filters, inquiry validation and handoff, accessible menus and local feedback.\n- `content.js`: editable service offerings, genuine partner names/roles/photos, client logo collection and editorial drafts, extracted from the supplied source.\n- `package.json`, `package-lock.json`: development and verification commands; Playwright is development-only.\n- `tools/serve.mjs`, `tools/build.mjs`, `tools/verify.mjs`: preview, production packaging and browser verification.\n- `robots.txt`, `sitemap.xml`, `.env.example`, `.gitignore`: static-site support and configuration notes.\n- `qa/verification.json`, `qa/screenshots/`: actual browser results and representative screenshots.\n- `reference-original/`: unchanged original HTML, CSS and JavaScript for review. It is excluded from production output. Original assets are retained.\n\n## Implemented repairs\n\nRemoved forced opening screens, cursor effects, click audio, blocking transitions, flip-only service descriptions, conflicting click handlers, fabricated newsletter confirmations and the simulated local chatbot. Replaced 140 KB of conflicting CSS with a shared visual system. Navigation now has reloadable hash URLs, active states, back/forward support and a not-found screen. The mobile menu and help panel support Escape and focus restoration. The separate contact dock reserves screen space rather than overlapping content.\n\nHome now leads with a distinctive navy illustration composition and Explore Our Work / Discuss Your Project actions, then featured client identities, service overview, working principles, delivery process, partners and FAQs. About and the dedicated Partners page preserve all five named profiles. Hussnain and Jamshaid remain centered in the first desktop row, with the other three partners in the second; approved responsibilities work on hover, by keyboard and by tap. All 17 source-supported services have detail routes with specific discovery questions, scope discussion, process, FAQs and service-prefilled inquiries. Portfolio preserves 94 distinct supplied client names and logos with real categories and progressive loading; every client name has a real client-profile destination. Profiles are clearly distinct from project case studies and make no undocumented outcome claims. Insights retains the original Blog route, with search/category filtering and a reader for the one full draft. Site search covers services, clients and editorial topics.\n\nThe original main logo is served without CSS cropping, offsets, recoloring or internal animation, at its natural proportions. `qa/brand-baseline.json` checks its exact bytes and all partner photograph bytes/names/roles against the pre-change baseline. The client collection has 36 smaller WebP derivatives; original image files are retained and the main logo/partner images are excluded from optimization. The complete served client-image collection saves 5,135,570 bytes. `tools/optimize-assets.py` is optional and requires Pillow; normal installation, preview, build and tests do not require Python.\n\nSee `PRESENTATION.md` for a short presentation walkthrough and the precise remaining content requirements. CSS selectors and responsive rules have been consolidated into a readable stylesheet. Partner cards and featured-client cards are shared rendering helpers; approved responsibilities and service planning questions are stored in `content.js`.\n\n## Contact, data and integration requirements\n\nThe original project has no receiving API, subscription provider, analytics or real chatbot. The form now validates required name/email/description and prepares a WhatsApp or email draft. Visitors explicitly open, review and send it in their chosen application. It never reports delivery. Values remain in memory in the current browser tab across navigation and are lost on reload. No credentials are required. If direct delivery is needed, the owner must choose a receiving service and supply its public form configuration or backend endpoint; private keys belong on that backend.\n\nExisting visitor feedback remains under the original `nexagenClientFeedback` local-storage key, accessible for editing/removal from Contact. It is clearly identified as browser-local, not submitted or publicly published. No existing local entries are deleted. The original fabricated chatbot's old storage is left untouched but is no longer read or written.\n\nThe address, two phone numbers, two emails, office hours, Instagram and LinkedIn destinations match the supplied source; their ownership and present availability have not been independently confirmed. The map now uses the same coordinates as the original Open in Maps link and loads only when requested. External message delivery, live social destinations and the Google Maps service require a real network and are not guaranteed by local checks.\n\n## Content and SEO review\n\nThis refinement used the earlier partner-layout reference, the supplied source and new browser captures. The latest pasted brief included no additional screenshots. The six blog summaries have no full articles, verified authors or publication dates; these are displayed as outlines. The one existing full insight is a draft with a reading time calculated from its actual words. Blog drafts and legal drafts have `noindex` metadata. Privacy and Terms describe actual current behavior and require owner review. Original testimonial claims, numerical achievements and package prices are retained in `reference-original/index.html` for review, rather than promoted as verified claims in the redesign.\n\n`nexagensolution.com` comes from the original canonical URL. Confirm that this is the production domain before deployment. The sitemap lists only the root: hash routes are reliable for static hosting but do not provide independent crawler URLs or server-rendered metadata. Titles/descriptions update in the browser; social crawlers generally see the shared root preview. If independent page indexing and previews are required, use generated standalone pages in a separate authorized SEO pass. No invented case-study outcomes, endorsements or structured business claims have been added.\n\n## Verification scope\n\nSee `qa/verification.json` for measured results. The suite checks seven main pages at 360, 390, 768, 1024 and 1440px, full-logo visibility/proportions, images, horizontal overflow, contact-control separation, all 17 service and 94 client-profile routes, portfolio filters/load more, blog search/clear/draft reading, contact validation and encoded handoff links, mobile navigation, browser history/reload, partner row placement and hover/keyboard/tap disclosure, help Escape/focus restoration, legal/not-found pages and landscape layout. Brand image bytes are checked against the pre-change baseline. Screenshots were visually inspected. No test sends a message. These checks do not constitute a complete screen-reader audit, legal review, delivery test or performance-score guarantee. Local load timings are observations in the test environment, not a Lighthouse score or production performance promise.\n\nGitHub publishing: main branch. Vercel build configuration is provided in vercel.json. Import this repository using the repository root; npm run build produces dist. Navigation uses hash routes, including #/portal.\n",
+      "provenance": {
+        "description": "Build review of public repository/README",
+        "technologies": "GitHub language metadata / README mention; not behavior tested",
+        "category": "README keyword classification; owner editable",
+        "repository": "GitHub public REST API",
+        "deployments": "GitHub homepage / public HTTP availability check"
+      },
+      "overrides": []
+    }
+  ],
+  "settings": {
+    "github": "https://github.com/SarimSheikh1",
+    "email": "sarimhatif1@gmail.com",
+    "phone": "+92 322 866 8488"
+  }
+}
