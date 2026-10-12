@@ -1,44 +1,30 @@
-# World Agentic Portfolio
+﻿# World Agentic
 
-A responsive React + TypeScript + Tailwind CSS portfolio with a charcoal/electric-blue dark theme and ivory light theme.
+AI-powered portfolio for Sarim Sheikh, Rawalpindi.
+Contact: sarimhatif1@gmail.com / WhatsApp 03170046008.
 
-## Run locally
+Includes an emerald/ivory theme, dark mode, reduced-motion-aware GSAP animations, six service options, WhatsApp inquiry drafts, a local-rule assistant, and 32 curated projects with inline live demos.
 
-Requires Node.js 22.12 or later.
+Accounts use the website's own email/password signup. Passwords are hashed with salted PBKDF2; sessions use HttpOnly cookies and hashed database tokens. Project metadata and preview images require a server-validated account. Members cannot access the admin overview. Existing external public apps and GitHub repositories retain their own access policies.
 
-```sh
-npm install
-npm run dev
-```
+## Local setup
 
-On Windows PowerShell, use `npm.cmd` if script execution policy blocks `npm`.
+Use Node 22.13 or newer. Run `npm ci`, then `npm run build`.
+Apply `drizzle/0000_neat_wiccan.sql` to the local D1 binding `DB` using Wrangler. Start the built preview with `npm start -- --port 8787`.
+For first-time admin setup, generate a random secret as `OWNER_SETUP_KEY` in your local environment. Local Wrangler reads secrets from `dist/server/.dev.vars`. Open `/admin#key=<your-private-key>` and choose your password. Setup is single use; the owner email is sarimhatif1@gmail.com. Never commit or package environment files or local databases.
 
-```sh
-npm run build
-npm run preview
-```
+## Hosting
 
-Vercel and Netlify configuration is included. Import the repository root; `npm run build` produces `dist`.
+This version requires a Cloudflare Worker-compatible runtime and D1, rather than static hosting alone. `.openai/hosting.json` declares the existing Sites project and DB binding. Configure OWNER_SETUP_KEY as a runtime secret before owner setup. Production data is separate from local test fixtures.
 
-## Features
+Before uploading a deployment archive, remove any local `.dev.vars` file from `dist/server`. Build artifacts, local secrets, Wrangler state, screenshots and test accounts must not be committed.
 
-- 70 public GitHub projects with search, category filters, and progressive loading.
-- 11 public deployments returned successful HTTP responses in the latest availability check. Live demo modals include desktop/mobile widths and a full-app new-tab fallback.
-- Genuine existing project screenshots are used where available; other cards clearly show public source artwork.
-- Source-only, unavailable, and protected projects do not pretend to have working demos.
-- Services, AI workflow, pricing scopes, education/certificates placeholder, testimonials placeholder, studio notes, FAQs, and contact sections.
-- A local common-question assistant with Confirm/Cancel request flow and WhatsApp handoff. No model API is connected.
-- Contact form prepares a message for the visitor to review and send in WhatsApp. No order is silently sent and no WhatsApp group is created.
-- Custom SVG logo, SEO metadata, accessible dialogs, and reduced-motion support.
+Email verification and password reset are not implemented. Contact forms prepare a WhatsApp message for the visitor to send; they do not send email or silently deliver orders. The assistant uses local rules, not an external AI model. Unknown personal details, prices, reviews and certificates are not fabricated.
 
-## Edit content
+## Checks
 
-`src/world-projects.json` stores public project records and availability checks. Update URLs only from confirmed owner/public sources; check public access and iframe headers. Availability may change, and some embedded features may require opening the app in its own tab.
+`npx tsc --noEmit`
+`node --import tsx --test tests/account.test.ts` (requires tsx)
+`node tests/browser.mjs` (requires Playwright, local preview and local-only owner fixture)
 
-`src/main.tsx` holds the main website and assistant replies. `src/PublicProjects.tsx` holds the gallery and live preview UI. `src/world.css` holds styling.
-
-Phone/WhatsApp: **03170046008**. Exact prices, verified testimonials, education, certificates, address, and other missing owner details remain placeholders. Netlify/Vercel account dashboards were inaccessible; the project collection is based on public GitHub records and discovered deployment URLs, not a claim that every dashboard-only deployment was enumerated.
-
-## Validation
-
-Production TypeScript/build checks passed. Browser checks passed for pagination, categories, search, 11 live-app filtering, correct embedded URLs, mobile preview toggle, GitHub links, dialog Escape, empty results, and mobile overflow. Individual third-party app features have not all been behavior-tested.
+Ask the owner which repository, branch and files to commit/push before either action, as recorded in AGENTS.md.
