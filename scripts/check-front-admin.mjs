@@ -1,0 +1,3 @@
+import {chromium} from '@playwright/test';
+const browser=await chromium.launch({channel:'chrome',headless:true});
+try{const page=await browser.newPage();await page.goto('http://127.0.0.1:8787/');await page.getByRole('button',{name:'Admin Login',exact:true}).click();await page.getByRole('dialog').getByRole('heading',{name:'Admin Login'}).waitFor();await page.getByLabel('Email or username').waitFor();if(await page.getByRole('dialog').getByRole('button',{name:'Create account',exact:true}).count())throw Error('Admin signup should not exist');console.log('PASS: front-page Admin Login opens owner form, without signup.')}finally{await browser.close()}
