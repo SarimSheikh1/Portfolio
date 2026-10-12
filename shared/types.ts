@@ -1,0 +1,52 @@
+export type Preview = {
+  url: string;
+  thumbnail: string;
+  alt: string;
+  capturedAt: string;
+  width: number;
+  height: number;
+  source: "capture" | "owner-upload" | "repository-capture";
+  sourceURL?: string;
+};
+export type Project = {
+  id: string;
+  slug: string;
+  name: string;
+  description: string;
+  overview: string;
+  category: string;
+  technologies: string[];
+  platform: string;
+  repository: string | null;
+  deployments: string[];
+  providerIdentities?: Record<string, string>;
+  featured: number;
+  published: boolean;
+  excluded: boolean;
+  fork: boolean;
+  archived: boolean;
+  verified: boolean;
+  status: string;
+  updatedAt: string;
+  checkedAt: string | null;
+  desktop: Preview | null;
+  mobile: Preview | null;
+  features: string[];
+  readme: string;
+  provenance: Record<string, string>;
+  overrides: string[];
+};
+export type Settings = {
+  github: string;
+  instagram?: string;
+  linkedin?: string;
+  email?: string;
+  phone?: string;
+  creator?: string;
+};
+export type PublicResponse = {
+  apiVersion: 1;
+  projects: Project[];
+  settings: Settings;
+  sourceStatus: string;
+};
