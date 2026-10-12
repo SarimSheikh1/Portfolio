@@ -1,0 +1,50 @@
+import { chromium } from '@playwright/test';
+import { readFile } from 'node:fs/promises';
+const origin='http://127.0.0.1:8787';
+for (const path of ['/api/v1/catalog','/api/v1/public']) {
+ const response=await fetch(origin+path);
+ if(response.status!==401) throw Error(path+' must reject anonymous requests');
+}
+const browser=await chromium.launch({channel:'chrome',headless:true});
+try {
+ const page=await browser.newPage();
+ const errors=[];page.on('pageerror',error=>errors.push(error.message));
+ await page.goto(origin);
+ await page.locator('.project').first().waitFor();
+ await page.locator('.public-account-actions').getByRole('button',{name:'Create account',exact:true}).click();
+ await page.getByRole('dialog').getByRole('heading',{name:'Create account',exact:true}).waitFor();
+ await page.getByRole('button',{name:'Close account dialog'}).click();
+ await page.locator('.project').first().scrollIntoViewIfNeeded();
+ await page.locator('.project.project-revealed').first().waitFor();
+ if(await page.locator('.project-links a').count())throw Error('Anonymous project links leaked');
+ if(!await page.locator('.project img').count())throw Error('Public project pictures missing');
+ if(await page.locator('.project-info h3').count())throw Error('Anonymous project details leaked');
+ await page.locator('.project-preview').first().click();
+ await page.getByRole('dialog').waitFor();
+ if(await page.locator('iframe').count())throw Error('Anonymous iframe leaked');
+ await page.getByRole('button',{name:'Close account dialog'}).click();
+ await page.route('**/api/v1/accounts/register',route=>route.fulfill({json:{viewerAuthenticated:true,csrf:'test-token'}}));
+ const records=JSON.parse(await readFile('server/data/world-projects.json','utf8'));
+ await page.route('**/api/v1/catalog',route=>route.fulfill({json:records}));
+ await page.locator('.project-links button').first().click();
+ await page.getByRole('dialog').getByRole('button',{name:'Create account',exact:true}).first().click();
+ await page.getByLabel('Email',{exact:true}).fill('viewer@example.com');
+ await page.getByLabel('Password',{exact:true}).fill('test-password-1234');
+ await page.locator('.project-account-form').getByRole('button',{name:'Create account',exact:true}).click();
+ await page.locator('.project-links').first().getByRole('link',{name:'GitHub'}).waitFor();
+ await page.locator('.project-links').first().getByRole('button',{name:'Overview',exact:true}).click();
+ await page.getByRole('dialog').waitFor();
+ await page.getByRole('button',{name:'Close project preview'}).click();
+ await page.route('**/api/v1/logout',route=>route.fulfill({json:{ok:true}}));
+ await page.getByRole('button',{name:'Logout',exact:true}).click();
+ await page.locator('.project-links').first().getByRole('button',{name:'Login / Create account'}).waitFor();
+ if(await page.locator('.project-links a').count())throw Error('Logout did not relock projects');
+ await page.setViewportSize({width:390,height:844});
+ await page.emulateMedia({reducedMotion:'reduce'});
+ if(await page.evaluate(()=>document.documentElement.scrollWidth>innerWidth))throw Error('Mobile overflow');
+ await page.locator('.project').first().scrollIntoViewIfNeeded();
+ const animation=await page.locator('.project').first().evaluate(e=>getComputedStyle(e).animationName);
+ if(animation!=='none')throw Error('Reduced motion was ignored');
+ if(errors.length)throw Error(errors.join('\n'));
+ console.log('PASS: real anonymous API denial; locked cards/previews; simulated signup unlock; overview; logout relock. Database account creation not exercised.');
+} finally {await browser.close()}
