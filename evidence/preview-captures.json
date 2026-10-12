@@ -1,0 +1,20 @@
+[
+  {
+    "project": "Mardara-Expense-Tracker",
+    "source": "public repository HTML; scripts disabled",
+    "result": "captured",
+    "url": "https://raw.githubusercontent.com/SarimSheikh1/Mardara-Expense-Tracker/main/public/index.html"
+  },
+  {
+    "project": "todo-app",
+    "source": "public deployment",
+    "result": "failed",
+    "error": "Homepage unavailable (404)"
+  },
+  {
+    "project": "todo-app",
+    "source": "public repository HTML; scripts disabled",
+    "result": "captured",
+    "url": "https://raw.githubusercontent.com/SarimSheikh1/todo-app/main/public/index.html"
+  }
+]
