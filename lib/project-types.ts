@@ -1,0 +1,1 @@
+export type WorldProject={name:string;category:string;repository:string;url:string;description:string;image:string;imageAlt:string;archived:boolean;updatedAt:string;status:string;embeddable:boolean;checkedAt:string;technologies:string[]};
