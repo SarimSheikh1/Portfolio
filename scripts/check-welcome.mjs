@@ -33,6 +33,9 @@ try {
   await fallback.getByLabel('Your beautiful name').fill('Ali');
   await fallback.getByRole('button', {name:'Continue', exact:true}).click();
   await fallback.getByText('Hello, Ali!', {exact:true}).waitFor();
+  await fallback.locator('.welcome-card').evaluate(async element => {
+    await Promise.all(element.getAnimations({subtree:true}).filter(animation => animation.effect?.getTiming().iterations !== Infinity).map(animation => animation.finished.catch(() => {})));
+  });
   if (await fallback.evaluate(() => document.documentElement.scrollWidth > innerWidth)) throw new Error('Mobile overflow');
   console.log('Passed: native prompt once, personalized welcome, dismissal, blocked-prompt fallback, mobile layout.');
 } finally { await browser.close(); }
