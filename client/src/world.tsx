@@ -2,6 +2,10 @@ import React, {useEffect, useState, lazy, Suspense} from 'react';
 import {createRoot} from 'react-dom/client';
 import {ArrowUpRight, ArrowRight, Sparkles, Sun, Moon, Menu, X, MessageCircle, Send, Globe, Code2, Layers, Bot, Check, Play, Plus, Minus} from 'lucide-react';
 import './world.css';
+import darkLogo from '../public/brand/world-agentic-dark.svg?raw';
+import lightLogo from '../public/brand/world-agentic-light.svg?raw';
+const themedDarkLogo=darkLogo.replaceAll('#8fd7b5','var(--accent)').replaceAll('#123e40','var(--panel)');
+const themedLightLogo=lightLogo.replace(/#c99264|#dec4a6|#914528/g,'var(--accent)').replaceAll('#8e4024','var(--soft)').replaceAll('#fff0cf','var(--text)');
 import PublicProjects from './PublicProjects';
 import VisitorActivity from './VisitorActivity';
 import Welcome from './Welcome';
@@ -12,7 +16,7 @@ import {api} from './api';
 function PrivateEntry(){const {pathname}=useLocation();const [allowed,setAllowed]=useState<boolean|null>(null);const [entryError,setEntryError]=useState('');useEffect(()=>{let active=true;api('/access-entry',{method:'POST',body:JSON.stringify({path:pathname})}).then(()=>{if(active)setAllowed(true)}).catch(e=>{if(active){if(e.status===404)setAllowed(false);else setEntryError('Unable to connect. Please check the server and reload.')}});return()=>{active=false}},[pathname]);if(entryError)return <main className="wrap section"><p role="alert">{entryError}</p><button onClick={()=>window.location.reload()}>Retry</button></main>;if(allowed===null)return <main className="wrap section" role="status">Loading...</main>;return allowed?<PrivatePage/>:<main className="wrap section"><h1>Page not found</h1><a href="/">Back to home</a></main>}
 
 const whatsapp='https://wa.me/923170046008';
-function Logo(){return <span className="logo-mark" aria-hidden="true"><img className="theme-logo-dark" src="/brand/world-agentic-male.svg" alt="" width="500" height="500"/><img className="theme-logo-light" src="/brand/world-agentic-female.svg" alt="" width="500" height="500"/></span>}
+function Logo(){return <span className="logo-mark" aria-hidden="true"><span className="theme-logo-dark" dangerouslySetInnerHTML={{__html:themedDarkLogo}}/><span className="theme-logo-light" dangerouslySetInnerHTML={{__html:themedLightLogo}}/></span>}
 function App(){const [adminLogin,setAdminLogin]=useState(false);const [light,setLight]=useState(()=>localStorage.getItem('world-persona')==='female');const [menu,setMenu]=useState(false);const [filter,setFilter]=useState('All projects');const [chat,setChat]=useState(false);const [message,setMessage]=useState('');const [messages,setMessages]=useState([{who:'bot',text:'Hi! I’m the World Agentic assistant. Ask about services, demos, or how we work with AI.'}]);const [order,setOrder]=useState(false);const [count,setCount]=useState(0);const [contactStatus,setContactStatus]=useState('');
 useEffect(()=>{document.documentElement.dataset.theme=light?'light':'dark';document.documentElement.dataset.persona=light?'female':'male';localStorage.setItem('world-persona',light?'female':'male');document.querySelector('meta[name="theme-color"]')?.setAttribute('content',light?'#241329':'#0b1730');document.querySelector('link[rel="icon"]')?.setAttribute('href',light?'/brand/world-agentic-female.svg':'/brand/world-agentic-male.svg');localStorage.setItem('world-theme',light?'light':'dark')},[light]);
 

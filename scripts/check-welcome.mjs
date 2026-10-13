@@ -14,6 +14,19 @@ try {
   await page.getByRole('button', {name:'Let’s explore'}).click();
   await page.getByRole('dialog').waitFor({state:'detached'});
   if (await page.getByRole('dialog').count()) throw new Error('Welcome did not close');
+  for (const persona of ['male','female']) {
+    if (await page.locator('html').getAttribute('data-persona') !== persona) await page.getByRole('button',{name:'Switch Male or Female theme'}).click();
+    const matches = await page.evaluate(() => {
+      const mark = [...document.querySelectorAll('.hero-art .logo-mark > span')].find(element => getComputedStyle(element).display !== 'none');
+      const stroke = mark?.querySelector('ellipse');
+      if (!stroke) return false;
+      const probe = document.createElement('span');
+      probe.style.color = 'var(--accent)'; document.body.append(probe);
+      const result = getComputedStyle(stroke).stroke === getComputedStyle(probe).color;
+      probe.remove(); return result;
+    });
+    if (!matches) throw new Error(`${persona} logo does not match the theme accent`);
+  }
   const fallback = await browser.newPage({viewport:{width:390,height:844}});
   await fallback.addInitScript(() => { window.prompt = () => null; });
   await fallback.goto('http://127.0.0.1:8787/');

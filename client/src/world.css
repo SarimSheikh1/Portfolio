@@ -97,6 +97,8 @@
 /* Theme-aware vector emblems remain sharp at any display resolution. */
 .logo-mark{display:inline-block;width:42px;height:42px;flex-shrink:0;line-height:0}
 .logo-mark img{width:100%;height:100%;object-fit:contain;display:block}
+.logo-mark>span{width:100%;height:100%;display:block}
+.logo-mark svg{width:100%;height:100%;display:block}
 .logo-mark .theme-logo-light{display:none}
 [data-theme=light] .logo-mark .theme-logo-dark{display:none}
 [data-theme=light] .logo-mark .theme-logo-light{display:block}
