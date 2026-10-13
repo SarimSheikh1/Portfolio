@@ -103,7 +103,114 @@
 [data-theme] .sphere{width:300px;height:300px;background:none;box-shadow:none;overflow:visible}
 [data-theme] .sphere .logo-mark{width:300px;height:300px;transform:none;filter:drop-shadow(0 0 22px color-mix(in srgb,var(--accent) 14%,transparent))}
 .sphere-grid{display:none}
+.welcome-overlay{position:fixed;inset:0;z-index:10000;display:grid;place-items:center;overflow:hidden;background:radial-gradient(ellipse at 50% 40%,#174c46 0%,#081b1c 65%);color:#fff;padding:24px}
+.welcome-card{position:relative;z-index:2;text-align:center;width:min(100%,620px);animation:welcome-reveal .8s ease-out both}
+.welcome-emblem{display:inline-grid;place-items:center;width:80px;height:80px;border:1px solid #8ae5b966;border-radius:24px;color:#b8f5c7;background:#b8f5c710;box-shadow:0 0 70px #8ae5b933;animation:welcome-float 3s ease-in-out infinite}
+.welcome-name{font-size:clamp(18px,3vw,26px);margin:28px 0 16px;overflow-wrap:anywhere;color:#d2eadb}
+.welcome-card h2{font-size:clamp(32px,7vw,66px);line-height:1.14;letter-spacing:-.04em;margin:0}
+.welcome-card h2 span{color:#b8f5c7}
+.welcome-caption{color:#b5cbc5;margin:24px 0 32px}
+.welcome-card .button{margin:auto;background:#b8f5c7;color:#081b1c}
+.welcome-form{margin-top:28px}
+.welcome-form input{display:block;width:min(100%,360px);margin:0 auto 24px;padding:16px 20px;border:1px solid #b8f5c766;border-radius:12px;background:#ffffff0d;color:#fff;font:inherit;text-align:center;outline-offset:4px}
+.welcome-form input::placeholder{color:#b5cbc5}
+.welcome-overlay{background:radial-gradient(ellipse at 4% 8%,#fff7e8 0%,#eadfc9 18%,transparent 52%),radial-gradient(ellipse at 95% 95%,#1c655c 0%,#081b1c 60%);isolation:isolate}
+.welcome-overlay:before{content:'';position:absolute;inset:0;z-index:-1;background:linear-gradient(125deg,#fff7e833,transparent 45%,#081b1c66);pointer-events:none}
+.welcome-card{padding:clamp(28px,5vw,48px);border:1px solid #fff7e84d;border-radius:32px;background:linear-gradient(135deg,#23443ee8,#081b1ce8);box-shadow:0 35px 100px #081b1c55,inset 0 1px 0 #fff7e833;backdrop-filter:blur(20px)}
+.welcome-emblem{background:linear-gradient(135deg,#fff7e8,#d9eecb);color:#163f37;border-color:#fff7e8;box-shadow:0 0 65px #fff7e833}
+.welcome-card .button{background:linear-gradient(110deg,#fff3d9,#b8f5c7);color:#081b1c;border:1px solid #fff7e866}
+.welcome-form input{background:linear-gradient(120deg,#fff7e81a,#ffffff08);border-color:#fff7e855}
+.welcome-orbit{border-color:#fff7e833}
+.welcome-orbit:before{background:#fff3d9;box-shadow:0 0 25px #fff3d9}
+html[data-theme='light'] .welcome-overlay{background:radial-gradient(ellipse at 95% 95%,#173e38 0%,#173e38 20%,transparent 62%),linear-gradient(135deg,#fff7e8,#e7ead7)}
+.welcome-overlay,html[data-theme='light'] .welcome-overlay{background:radial-gradient(ellipse at 20% 15%,#214e43 0%,transparent 55%),radial-gradient(ellipse at 85% 85%,#163c42 0%,#061718 65%);transition:background .8s ease,color .8s ease}
+.welcome-overlay.welcome-celebrate,html[data-theme='light'] .welcome-overlay.welcome-celebrate{background:radial-gradient(ellipse at 10% 10%,#dcf5dc,transparent 55%),radial-gradient(ellipse at 90% 90%,#cee9e8,transparent 60%),#fff7e8;color:#163f37}
+.welcome-celebrate .welcome-card{background:linear-gradient(135deg,#fffdf3ee,#e8f3e8ed);border-color:#ffffffcc;box-shadow:0 35px 100px #163f3726,inset 0 1px 0 #fff;color:#163f37}
+.welcome-celebrate .welcome-name{color:#31584c}
+.welcome-celebrate .welcome-caption{color:#526d61}
+.welcome-celebrate .welcome-emblem{background:linear-gradient(135deg,#173f37,#2b6256);color:#e4f7da;border-color:#31584c;box-shadow:0 0 55px #31584c22}
+.welcome-celebrate h2 span{background-image:linear-gradient(110deg,#276b47 20%,#45835a 45%,#227b91 55%,#276b47 80%)}
+.welcome-celebrate .welcome-card .button{background:linear-gradient(110deg,#173f37,#2b6256);color:#fff7e8;border-color:#31584c;box-shadow:0 8px 30px #163f3722}
+.welcome-celebrate .welcome-card .button:hover{box-shadow:0 10px 35px #163f3744}
+.welcome-celebrate .welcome-orbit{border-color:#31584c26}
+.welcome-celebrate .welcome-orbit:before{background:#31584c;box-shadow:0 0 24px #31584c66}
+.welcome-celebrate .welcome-particles i{background:#45835a}
+@media(max-width:600px){.welcome-card{border-radius:24px;padding:28px 20px}.welcome-overlay{padding:16px}}
+.welcome-orbit{position:absolute;width:min(85vw,760px);aspect-ratio:1;border:1px solid #b8f5c71c;border-radius:50%;animation:welcome-spin 18s linear infinite}
+.welcome-orbit:before{content:'';position:absolute;top:14%;left:14%;width:10px;height:10px;border-radius:50%;background:#b8f5c7;box-shadow:0 0 24px #b8f5c7}
+.welcome-orbit-second{width:min(110vw,1000px);animation-direction:reverse;animation-duration:28s}
+.welcome-particles{position:absolute;inset:0;pointer-events:none}
+.welcome-particles i{position:absolute;left:calc(5% + var(--particle)*5%);top:110%;width:4px;height:4px;background:#b8f5c7;border-radius:50%;opacity:0;animation:welcome-rise 5s linear infinite;animation-delay:calc(var(--particle)*-.4s)}
+@keyframes welcome-reveal{from{opacity:0;transform:translateY(28px) scale(.96)}to{opacity:1;transform:none}}
+@keyframes welcome-float{50%{transform:translateY(-8px)}}
+@keyframes welcome-spin{to{transform:rotate(360deg)}}
+@keyframes welcome-rise{10%{opacity:.65}90%{opacity:.65}to{transform:translateY(-110vh);opacity:0}}
+.welcome-aurora{position:absolute;inset:0;overflow:hidden;pointer-events:none}
+.welcome-aurora i{position:absolute;width:65vmax;height:65vmax;border-radius:50%;filter:blur(65px);opacity:.22;background:radial-gradient(circle,#55e5a5,transparent 65%);top:-45%;left:-25%;animation:welcome-drift 12s ease-in-out infinite alternate}
+.welcome-aurora i:nth-child(2){background:radial-gradient(circle,#52b9dc,transparent 65%);left:50%;top:20%;animation-delay:-5s;animation-duration:16s}
+.welcome-aurora i:nth-child(3){background:radial-gradient(circle,#ba9df5,transparent 65%);left:30%;top:-50%;opacity:.14;animation-delay:-8s}
+.welcome-grid{position:absolute;inset:50% -50% -75%;background-image:linear-gradient(#b8f5c712 1px,transparent 1px),linear-gradient(90deg,#b8f5c712 1px,transparent 1px);background-size:70px 70px;transform:perspective(500px) rotateX(60deg);mask-image:linear-gradient(transparent,#000 35%,transparent);animation:welcome-grid-flow 8s linear infinite;pointer-events:none}
+.welcome-celebrate .welcome-card{animation:welcome-arrive 1s cubic-bezier(.16,1,.3,1) both}
+.welcome-celebrate .welcome-card>p,.welcome-celebrate .welcome-card>h2,.welcome-celebrate .welcome-card>button{animation:welcome-reveal .9s cubic-bezier(.16,1,.3,1) both}
+.welcome-celebrate .welcome-card>.welcome-name{animation-delay:.12s}
+.welcome-celebrate .welcome-card>h2{animation-delay:.25s}
+.welcome-celebrate .welcome-card>.welcome-caption{animation-delay:.4s}
+.welcome-celebrate .welcome-card>button{animation-delay:.55s}
+.welcome-celebrate h2 span{background:linear-gradient(110deg,#b8f5c7 20%,#fff 45%,#83d7f0 55%,#b8f5c7 80%);background-size:250% 100%;background-clip:text;-webkit-background-clip:text;color:transparent;animation:welcome-shimmer 5s ease-in-out infinite}
+.welcome-burst{position:absolute;left:50%;top:50%;width:0;height:0;pointer-events:none}
+.welcome-burst i{position:absolute;width:5px;height:16px;border-radius:5px;background:#b8f5c7;box-shadow:0 0 12px currentColor;color:#b8f5c7;opacity:0;animation:welcome-burst-out 1.8s cubic-bezier(.12,.7,.2,1) both;animation-delay:calc(var(--ray)*.012s)}
+.welcome-burst i:nth-child(3n){background:#83d7f0;color:#83d7f0}
+.welcome-burst i:nth-child(3n+1){background:#e1c1ff;color:#e1c1ff}
+.welcome-card .button{transition:box-shadow .3s,transform .3s;box-shadow:0 0 30px #b8f5c71a}
+.welcome-card .button:hover{transform:translateY(-3px);box-shadow:0 8px 45px #b8f5c744}
+.welcome-overlay.welcome-leaving{animation:welcome-depart .65s ease-in both;pointer-events:none}
+@keyframes welcome-drift{to{transform:translate(15%,20%) scale(1.2)}}
+@keyframes welcome-grid-flow{to{background-position:0 70px}}
+@keyframes welcome-arrive{from{opacity:0;transform:scale(.85) translateY(35px);filter:blur(12px)}to{opacity:1;transform:none;filter:blur(0)}}
+@keyframes welcome-shimmer{0%,100%{background-position:100% 50%}50%{background-position:0% 50%}}
+@keyframes welcome-burst-out{0%{opacity:0;transform:rotate(calc(var(--ray)*15deg)) translateY(60px) scale(.3)}15%{opacity:1}100%{opacity:0;transform:rotate(calc(var(--ray)*15deg)) translateY(min(48vw,430px)) scale(.6)}}
+@keyframes welcome-depart{to{opacity:0;transform:scale(1.06);filter:blur(8px)}}
+@media(max-width:600px){.welcome-aurora i{filter:blur(40px)}.welcome-grid{background-size:45px 45px}}
+@media(prefers-reduced-motion:reduce){.welcome-overlay *, .welcome-overlay.welcome-leaving{animation:none!important}.welcome-burst,.welcome-grid{display:none}}
+@media(prefers-reduced-motion:reduce){.welcome-card,.welcome-emblem,.welcome-orbit,.welcome-particles i{animation:none}.welcome-particles{display:none}}
 .hero-art>.orbit{opacity:.2}
 .chat-heading .logo-mark{width:32px;height:32px;transform:none}
 @media(min-width:2000px){.wrap{max-width:1600px}.header{max-width:1800px}.hero-art{transform:scale(1.2)}.hero h1{font-size:110px}}
 @media(max-width:700px){.brand .logo-mark{width:34px;height:34px}.hero-art{transform:scale(.85)}}
+
+html[data-persona='male']{--bg:#0b1730;--panel:#122340;--text:#edf4ff;--muted:#a5b8d5;--line:#a8c9ff24;--accent:#81bbff;--soft:#192f50;background:var(--bg);color:var(--text);color-scheme:dark}
+html[data-persona='female']{--bg:#241329;--panel:#321e38;--text:#fff1f7;--muted:#d0aec5;--line:#ffd0e624;--accent:#f1a5ca;--soft:#442541;background:var(--bg);color:var(--text);color-scheme:dark}
+html[data-persona] body{background:radial-gradient(ellipse at 85% 0%,color-mix(in srgb,var(--accent) 12%,transparent),transparent 50%),var(--bg)}
+html[data-persona] .nav{color:var(--muted)}
+html[data-persona] .hero h1 .gradient{background-image:linear-gradient(90deg,var(--accent),var(--text))}
+html[data-persona] .button{background:var(--accent);color:var(--bg)}
+html[data-persona] .button:hover{background:color-mix(in srgb,var(--accent) 80%,white)}
+.persona-label{font-size:12px;font-weight:600;border:1px solid var(--line);border-radius:24px;padding:8px 12px;color:var(--accent)}
+html[data-persona] .welcome-overlay,html[data-persona] .welcome-overlay.welcome-celebrate{background:radial-gradient(ellipse at 15% 10%,var(--soft),transparent 60%),radial-gradient(ellipse at 90% 90%,color-mix(in srgb,var(--accent) 20%,var(--bg)),var(--bg));color:var(--text)}
+html[data-persona] .welcome-card,html[data-persona] .welcome-celebrate .welcome-card{background:linear-gradient(135deg,color-mix(in srgb,var(--panel) 94%,transparent),color-mix(in srgb,var(--bg) 94%,transparent));color:var(--text);border-color:var(--line);box-shadow:0 35px 100px #0004,inset 0 1px 0 var(--line)}
+html[data-persona] .welcome-name,html[data-persona] .welcome-caption{color:var(--muted)}
+html[data-persona] .welcome-emblem{background:linear-gradient(135deg,var(--accent),var(--text));color:var(--bg);border-color:var(--accent);box-shadow:0 0 65px color-mix(in srgb,var(--accent) 20%,transparent)}
+html[data-persona] .welcome-card h2 span{color:var(--accent)}
+html[data-persona] .welcome-celebrate h2 span{color:transparent;background-image:linear-gradient(110deg,var(--accent) 20%,var(--text) 45%,var(--accent) 80%)}
+html[data-persona] .welcome-card .button{background:var(--accent);color:var(--bg);border-color:var(--accent)}
+html[data-persona] .welcome-form input{border-color:var(--accent);color:var(--text);background:var(--soft)}
+html[data-persona] .welcome-orbit{border-color:var(--line)}
+html[data-persona] .welcome-orbit:before,html[data-persona] .welcome-particles i,html[data-persona] .welcome-burst i{background:var(--accent);color:var(--accent)}
+html[data-persona] .welcome-aurora i{background:radial-gradient(circle,var(--accent),transparent 65%)}
+/* The introduction blends both persona palettes, independent of the site theme. */
+html[data-persona] .welcome-overlay,html[data-persona] .welcome-overlay.welcome-celebrate{background:radial-gradient(ellipse at 0% 20%,#254b805c,transparent 60%),radial-gradient(ellipse at 100% 80%,#a3417355,transparent 60%),linear-gradient(120deg,#0b1730,#241329);color:#f9f2ff}
+html[data-persona] .welcome-card,html[data-persona] .welcome-celebrate .welcome-card{background:linear-gradient(125deg,#142a45ee,#36213aee);border-color:#d2b7ed40;color:#f9f2ff;box-shadow:-24px 12px 90px #81bbff12,24px 12px 90px #f1a5ca12,inset 0 1px 0 #ffffff18}
+html[data-persona] .welcome-name,html[data-persona] .welcome-caption{color:#c8bdd7}
+html[data-persona] .welcome-emblem{background:linear-gradient(120deg,#81bbff,#ddd0f5 50%,#f1a5ca);color:#17233c;border-color:#ddd0f5;box-shadow:-12px 0 40px #81bbff33,12px 0 40px #f1a5ca33}
+html[data-persona] .welcome-card h2 span,html[data-persona] .welcome-celebrate h2 span{background-image:linear-gradient(110deg,#81bbff 15%,#e2d4f7 48%,#f1a5ca 80%);background-size:250% 100%;background-clip:text;-webkit-background-clip:text;color:transparent;animation:welcome-shimmer 5s ease-in-out infinite}
+html[data-persona] .welcome-card .button{background:linear-gradient(110deg,#81bbff,#ddd0f5 50%,#f1a5ca);color:#17233c;border-color:#d2b7ed66;box-shadow:0 8px 30px #b7adf122}
+html[data-persona] .welcome-form input{background:linear-gradient(120deg,#81bbff0d,#f1a5ca0d);border-color:#c3b3e688;color:#f9f2ff}
+html[data-persona] .welcome-form input::placeholder{color:#c8bdd7}
+html[data-persona] .welcome-form input:focus-visible{outline:2px solid #d2b7ed;box-shadow:-8px 0 30px #81bbff1a,8px 0 30px #f1a5ca1a}
+html[data-persona] .welcome-orbit{border-color:#81bbff33}
+html[data-persona] .welcome-orbit-second{border-color:#f1a5ca33}
+html[data-persona] .welcome-orbit:before,html[data-persona] .welcome-particles i,html[data-persona] .welcome-burst i{background:#81bbff;color:#81bbff;box-shadow:0 0 20px #81bbff66}
+html[data-persona] .welcome-orbit-second:before,html[data-persona] .welcome-particles i:nth-child(even),html[data-persona] .welcome-burst i:nth-child(even){background:#f1a5ca;color:#f1a5ca;box-shadow:0 0 20px #f1a5ca66}
+html[data-persona] .welcome-aurora i{background:radial-gradient(circle,#81bbff,transparent 65%)}
+html[data-persona] .welcome-aurora i:nth-child(2){background:radial-gradient(circle,#f1a5ca,transparent 65%)}
+html[data-persona] .welcome-aurora i:nth-child(3){background:radial-gradient(circle,#c2a4ed,transparent 65%)}
