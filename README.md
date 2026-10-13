@@ -22,7 +22,13 @@ Ideas become websites, apps, and interactive experiences.
 
 ## A personal welcome. A world of possibilities.
 
-![World Agentic portfolio — desktop homepage with the animated globe and studio introduction](docs/qa/world-agentic-preview.png)
+**Male theme**
+
+![World Agentic Male theme — desktop homepage with the animated globe and studio introduction](docs/qa/world-agentic-preview.png)
+
+**Female theme**
+
+![World Agentic Female theme — plum and rose pink homepage with matching globe artwork](docs/qa/world-agentic-female-preview.png)
 
 World Agentic brings the studio's services, project collection, and AI workflow together in one portfolio. Visitors enter their name, see a personalized animated welcome, and explore real projects and the ideas behind them.
 
