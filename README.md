@@ -22,6 +22,8 @@ Ideas become websites, apps, and interactive experiences.
 
 ## A personal welcome. A world of possibilities.
 
+![World Agentic portfolio — desktop homepage with the animated globe and studio introduction](docs/qa/world-agentic-preview.png)
+
 World Agentic brings the studio's services, project collection, and AI workflow together in one portfolio. Visitors enter their name, see a personalized animated welcome, and explore real projects and the ideas behind them.
 
 | Experience | What you will find |
