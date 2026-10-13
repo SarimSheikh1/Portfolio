@@ -132,6 +132,12 @@ Portfolio/
 
 ## Useful commands
 
+### Visitor analytics
+
+Owner-only analytics records visitor-provided names, linked accounts, browser/device information, IP address, language, timezone, screen/viewport size, referrer origin, sections and project clicks. Browser identities persist across tabs. Recent visitors show Active/Offline status, Pakistan timestamps, and expandable details. Names and device information are self-reported; clearing browser storage creates a new identity. Historical tab identities remain separate.
+
+After updating an existing hosted API, run `npm.cmd run db:migrate` before serving the new tracking endpoints to add the name and details columns. Local PGlite applies these changes on server startup. Passwords and private form contents are not recorded. Run `node scripts/check-visitor-details.mjs` against the local development server to check persistence, cross-tab identity, access control, and dashboard rendering; this creates test visitor records.
+
 | Command | Purpose |
 | :--- | :--- |
 | `npm.cmd run dev` | Start the frontend and API. |

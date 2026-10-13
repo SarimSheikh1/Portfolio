@@ -12,3 +12,5 @@ CREATE TABLE IF NOT EXISTS viewers (id uuid PRIMARY KEY, email text UNIQUE NOT N
 CREATE TABLE IF NOT EXISTS visitor_presence (id uuid PRIMARY KEY, account_id uuid, first_seen timestamptz NOT NULL DEFAULT now(), last_seen timestamptz NOT NULL DEFAULT now(), current_target text NOT NULL DEFAULT 'Home');
 CREATE TABLE IF NOT EXISTS visitor_events (id uuid PRIMARY KEY, visitor_id uuid NOT NULL REFERENCES visitor_presence(id), account_id uuid, kind text NOT NULL, target text NOT NULL, created_at timestamptz NOT NULL DEFAULT now());
 CREATE INDEX IF NOT EXISTS visitor_events_created_idx ON visitor_events(created_at DESC);
+ALTER TABLE visitor_presence ADD COLUMN IF NOT EXISTS name text;
+ALTER TABLE visitor_presence ADD COLUMN IF NOT EXISTS details jsonb NOT NULL DEFAULT '{}';

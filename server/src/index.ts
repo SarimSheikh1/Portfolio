@@ -309,9 +309,9 @@ app.post(
 app.post('/api/v1/activity',rateLimit({windowMs:60*1000,limit:60,standardHeaders:'draft-8',legacyHeaders:false}),csrf,async(req,res)=>{
   if(!databaseConfigured){res.status(503).json({error:'Activity storage unavailable'});return;}
   if(req.session.owner){res.json({stored:false});return;}
-  const data=z.object({visitor:z.uuid(),kind:z.enum(['visit','section','project','link','heartbeat']),target:z.string().min(1).max(200)}).parse(req.body);
+  const data=z.object({visitor:z.uuid(),kind:z.enum(['visit','section','project','link','heartbeat']),target:z.string().min(1).max(200),name:z.string().trim().min(1).max(80).optional(),details:z.object({browser:z.string().max(500),language:z.string().max(80),timezone:z.string().max(100),screen:z.string().max(40),viewport:z.string().max(40),device:z.string().max(40),referrer:z.string().max(300),page:z.string().max(200)}).optional()}).parse(req.body);
   const account=req.session.viewer||null;
-  await pool.query('INSERT INTO visitor_presence(id,account_id,current_target) VALUES($1,$2,$3) ON CONFLICT(id) DO UPDATE SET account_id=COALESCE(EXCLUDED.account_id,visitor_presence.account_id),last_seen=now(),current_target=EXCLUDED.current_target',[data.visitor,account,data.target]);
+  await pool.query('INSERT INTO visitor_presence(id,account_id,current_target,name,details) VALUES($1,$2,$3,$4,$5::jsonb) ON CONFLICT(id) DO UPDATE SET account_id=COALESCE(EXCLUDED.account_id,visitor_presence.account_id),last_seen=now(),current_target=EXCLUDED.current_target,name=COALESCE(EXCLUDED.name,visitor_presence.name),details=visitor_presence.details||EXCLUDED.details',[data.visitor,account,data.target,data.name||null,JSON.stringify({...data.details,ip:req.ip||'Unknown'})]);
   if(data.kind!=='heartbeat')await pool.query('INSERT INTO visitor_events(id,visitor_id,account_id,kind,target) VALUES($1,$2,$3,$4,$5)',[randomUUID(),data.visitor,account,data.kind,data.target]);
   res.json({stored:true});
 });
@@ -319,9 +319,9 @@ app.use("/api/v1/admin", requireOwner, csrf);
 app.get('/api/v1/admin/activity',async(_req,res)=>{
   res.setHeader('Cache-Control','private, no-store');
   const summary=await pool.query("SELECT count(*)::int AS total, count(*) FILTER(WHERE last_seen>now()-interval '90 seconds')::int AS active FROM visitor_presence");
-  const visitors=await pool.query('SELECT p.*,v.email FROM visitor_presence p LEFT JOIN viewers v ON v.id=p.account_id ORDER BY p.last_seen DESC LIMIT 100');
-  const events=await pool.query('SELECT e.*,v.email FROM visitor_events e LEFT JOIN viewers v ON v.id=e.account_id ORDER BY e.created_at DESC LIMIT 200');
-  res.json({summary:summary.rows[0],visitors:visitors.rows,events:events.rows});
+  const visitors=await pool.query("SELECT p.*,v.email,(p.last_seen>now()-interval '90 seconds') AS active FROM visitor_presence p LEFT JOIN viewers v ON v.id=p.account_id ORDER BY p.last_seen DESC,p.id LIMIT 100");
+  const events=await pool.query('SELECT e.*,v.email,p.name FROM visitor_events e LEFT JOIN viewers v ON v.id=e.account_id LEFT JOIN visitor_presence p ON p.id=e.visitor_id ORDER BY e.created_at DESC,e.id LIMIT 200');
+  res.json({summary:summary.rows[0],visitors:visitors.rows,events:events.rows,serverTime:new Date().toISOString()});
 });
 
 app.get("/api/v1/admin/projects", async (_req, res) =>

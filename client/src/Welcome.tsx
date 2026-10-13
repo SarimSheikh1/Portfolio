@@ -9,6 +9,12 @@ export default function Welcome() {
   const [leaving, setLeaving] = useState(false);
 
   useEffect(() => {
+    if (!name) return;
+    try { localStorage.setItem('world-visitor-name', name); } catch { /* Storage may be disabled. */ }
+    window.dispatchEvent(new CustomEvent('world-visitor-name', {detail:name}));
+  }, [name]);
+
+  useEffect(() => {
     if (!leaving) return;
     const timer = window.setTimeout(() => setClosed(true), 650);
     return () => window.clearTimeout(timer);

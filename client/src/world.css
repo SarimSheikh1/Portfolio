@@ -216,3 +216,20 @@ html[data-persona] .welcome-orbit-second:before,html[data-persona] .welcome-part
 html[data-persona] .welcome-aurora i{background:radial-gradient(circle,#81bbff,transparent 65%)}
 html[data-persona] .welcome-aurora i:nth-child(2){background:radial-gradient(circle,#f1a5ca,transparent 65%)}
 html[data-persona] .welcome-aurora i:nth-child(3){background:radial-gradient(circle,#c2a4ed,transparent 65%)}
+.visitor-table{overflow-x:auto;margin:20px 0;border:1px solid var(--line);border-radius:12px}
+.visitor-table table{width:100%;min-width:760px;border-collapse:collapse;font-size:13px;text-align:left}
+.visitor-table th{background:var(--soft);color:var(--muted);font-size:11px;letter-spacing:.03em;padding:16px;white-space:nowrap}
+.visitor-table td{padding:16px;vertical-align:top;border-top:1px solid var(--line);overflow-wrap:anywhere}
+.visitor-table td:first-child{min-width:180px;max-width:280px}
+.visitor-table time{display:block;white-space:nowrap}
+.visitor-table time small,.visitor-id{display:block;color:var(--muted);margin-top:5px}
+.visitor-status{display:inline-flex;align-items:center;gap:6px;border-radius:20px;padding:5px 9px;background:var(--soft);color:var(--muted);font-size:11px;white-space:nowrap}
+.visitor-status:before{content:'';width:6px;height:6px;border-radius:50%;background:currentColor}
+.visitor-status.is-active{color:var(--accent)}
+.visitor-summary{display:flex;flex-wrap:wrap;gap:16px;padding:18px;border:1px solid var(--line);background:var(--panel);border-radius:12px}
+.visitor-details{margin-top:10px;font-size:11px}
+.visitor-details summary{color:var(--accent)}
+.visitor-details dl{margin:12px 0;min-width:200px}
+.visitor-details dl div{padding:6px 0;border-bottom:1px solid var(--line)}
+.visitor-details dt{text-transform:capitalize;color:var(--muted)}
+.visitor-details dd{margin:3px 0;overflow-wrap:anywhere}
